@@ -1,30 +1,34 @@
-#include <vector>
-#include <string>
+#ifndef USER_H_INCLUDED
+#define USER_H_INCLUDED
+
+#include <bits/stdc++.h>
 #include "Article.h"
 
 struct user
 {
-    string username;
-    string password;
-    vector<Article *> articles;
+    std::string username;
+    std::string password;
+    std::vector<Article *> articles;
 };
 
 class User
 {
 private:
     user *loginUser;
-    vector<user *> users;
-    string hashPassword(string &password);
-    int searchUser(string &username);
-    bool vPassword(string &password);
+    std::vector<user *> users;
+    std::string hashPassword(std::string &password);
+    int searchUser(std::string &username);
+    bool vPassword(std::string &password);
 
 public:
     User();
     ~User();
-    void Register(string &username, string &password);
-    user *login(string &username, string &password);
-    user *getUser(string &username);
+    void Register(std::string &username, std::string &password);
+    user *login(std::string &username, std::string &password);
+    user *getUser(std::string &username);
     user *getLoginUser();
     void addArticle(Article *newArticle);
-    vector<Article *> getArticles();
+    std::vector<Article *> getArticles();
 };
+
+#endif // USER_H_INCLUDED
