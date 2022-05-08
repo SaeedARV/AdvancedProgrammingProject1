@@ -1,7 +1,4 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <regex>
+#include <bits/stdc++.h>
 #include "User.h"
 #include "Article.h"
 using namespace std;
@@ -14,7 +11,7 @@ void User::Register(string &username, string &password)
 {
     if (this->searchUser(username) != -1)
     {
-        cout << username << "  is not available!! \nPlease try another one" << endl;
+        cout << username << "  is not available!!\nPlease try another one" << endl;
         return;
     }
     if (!this->vPassword(password))
@@ -34,7 +31,7 @@ user *User::login(string &username, string &password)
     int user = this->searchUser(username);
     if (user == -1)
     {
-        cout << username << "  is not found!! \nPlease try againe" << endl;
+        cout << username << "  is not found!!\nPlease try again" << endl;
         return nullptr;
     }
     if (this->users[user]->password == this->hashPassword(password))
