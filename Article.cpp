@@ -1,7 +1,8 @@
-//#include <bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
+#include "User.h"
 #include "Article.h"
 
-Article::Article(){}
-
-Article::~Article() {}
+int main()
+{
+}
