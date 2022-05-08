@@ -1,4 +1,7 @@
-//#include <bits/stdc++.h>
+#ifndef ARTICLE_H_INCLUDED
+#define ARTICLE_H_INCLUDED
+
+#include <bits/stdc++.h>
 //#include "User.h"
 
 
@@ -10,3 +13,5 @@ public:
     ~Article();
     };
 
+
+#endif // ARTICLE_H_INCLUDED
