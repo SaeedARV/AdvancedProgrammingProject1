@@ -84,13 +84,3 @@ string User::hashPassword(string &password)
     }
     return a;
 }
-
-void User::addArticle(Article *newArticle)
-{
-    this->loginUser->articles.push_back(newArticle);
-}
-
-vector<Article *> User::getArticles()
-{
-    return this->loginUser->articles;
-}
