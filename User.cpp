@@ -36,7 +36,7 @@ user *User::login(string &username, string &password)
     }
     if (this->users[user]->password == this->hashPassword(password))
     {
-        cout << "you are logined" << endl;
+        cout << "you are logged in" << endl;
         this->loginUser = this->users[user];
         return this->loginUser;
     }
