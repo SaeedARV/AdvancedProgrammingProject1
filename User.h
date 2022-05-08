@@ -27,8 +27,6 @@ public:
     user *login(std::string &username, std::string &password);
     user *getUser(std::string &username);
     user *getLoginUser();
-    void addArticle(Article *newArticle);
-    std::vector<Article *> getArticles();
 };
 
 #endif // USER_H_INCLUDED
