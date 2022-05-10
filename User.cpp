@@ -41,6 +41,7 @@ user *User::login(string &username, string &password)
         return this->loginUser;
     }
     cout << "password is not correct" << endl;
+    return nullptr;
 }
 
 user *User::getLoginUser()
@@ -61,7 +62,7 @@ user *User::getUser(string &username)
 
 int User::searchUser(string &username)
 {
-    for (int i = 0; i < this->users.size(); i++)
+    for (int i = 0; i < (int)this->users.size(); i++)
     {
         if (this->users[i]->username == username)
             return i;
@@ -78,7 +79,7 @@ bool User::vPassword(string &password)
 string User::hashPassword(string &password)
 {
     string a = "";
-    for (int i = 0; i < password.length(); i++)
+    for (int i = 0; i < (int)password.length(); i++)
     {
         a += ((password[i] + 33) % 65) ^ 'A';
     }
