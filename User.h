@@ -8,7 +8,7 @@ struct user
 {
     std::string username;
     std::string password;
-    std::vector<Article *> articles;
+    std::vector<article *> articles;
 };
 
 class User
