@@ -13,7 +13,7 @@ struct article
     std::string Id;
     std::string body;
     std::vector<article *> refId;
-    std::vector<user *> author;
+    std::vector<user *> authors;
 };
 
 class Article
