@@ -11,19 +11,19 @@ void User::Register(string &username, string &password)
 {
     if (this->searchUser(username) != -1)
     {
-        cout << username << "  is not available!!\nPlease try another one" << endl;
+        cout << username << " is not available!! Please try another one." << endl;
         return;
     }
     if (!this->vPassword(password))
     {
-        cout << "This password is not strong enough.\nPlease try another one." << endl;
+        cout << "This password is not strong enough. Please try another one." << endl;
         return;
     }
     user *newUser = new user;
     newUser->username = username;
     newUser->password = this->hashPassword(password);
     this->users.push_back(newUser);
-    cout << "you are registered:)";
+    cout << "You are registered:)";
 }
 
 user *User::login(string &username, string &password)
@@ -31,22 +31,22 @@ user *User::login(string &username, string &password)
     int user = this->searchUser(username);
     if (user == -1)
     {
-        cout << username << "  is not found!!\nPlease try again" << endl;
+        cout << username << " is not found!! Please try again." << endl;
         return nullptr;
     }
     if (this->users[user]->password == this->hashPassword(password))
     {
-        cout << "you are logged in" << endl;
+        cout << "You are logged in." << endl;
         this->loginUser = this->users[user];
         return this->loginUser;
     }
-    cout << "password is not correct" << endl;
+    cout << "Password is not correct." << endl;
     return nullptr;
 }
 
 user *User::getLoginUser()
 {
-    return this->getLoginUser();
+    return this->loginUser;
 }
 
 user *User::getUser(string &username)

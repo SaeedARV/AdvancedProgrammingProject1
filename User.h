@@ -4,6 +4,7 @@
 #include <bits/stdc++.h>
 #include "Article.h"
 
+struct article;
 struct user
 {
     std::string username;
@@ -29,4 +30,4 @@ public:
     user *getLoginUser();
 };
 
-#endif // USER_H_INCLUDED
+#endif 

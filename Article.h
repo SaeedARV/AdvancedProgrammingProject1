@@ -4,6 +4,8 @@
 #include <bits/stdc++.h>
 #include "User.h"
 
+struct user;
+
 struct article
 {
     std::string name;
@@ -11,7 +13,7 @@ struct article
     std::string Id;
     std::string body;
     std::vector<article *> refId;
-    std::vector<user *> author;
+    std::vector<user *> authors;
 };
 
 class Article
