@@ -4,6 +4,8 @@
 #include <bits/stdc++.h>
 #include "User.h"
 
+struct user;
+
 struct article
 {
     std::string name;
