@@ -2,21 +2,19 @@
 using namespace std;
 #include "Article.h"
 
-Article::Article()
-{
-}
+Article::Article(){}
 
 Article::~Article() {}
 
-/*
-void User::addArticle(Article *newArticle)
+void Article::addArticle(article *newArticle)
 {
-    this->loginUser->articles.push_back(newArticle);
+    if(vArticle(newArticle)){
+        for(int i = 0; i < newArticle->authors.size(); i++){
+            newArticle->authors[i]->articles.push_back(newArticle);
+        }
+    }
 }
 
-vector<Article *> User::getArticles()
-{
-    return this->loginUser->articles;
+bool Article::vArticle(article *newArticle){
 }
 
-*/
