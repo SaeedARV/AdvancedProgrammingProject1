@@ -10,6 +10,7 @@ int main()
     a->Register(username, password);
     a->Register(username, password);
     user *loginUser = a->login(username, password);
+
     article *ar = new article;
     ar->body = "asdsadasdasd\nasddsg, asdfsdfdsfsd.";
     ar->authors.push_back(loginUser);
@@ -18,4 +19,6 @@ int main()
     for(int i = 0; i < loginUser->articles.size(); i++){
         cout << loginUser->articles[i]->body << " ";
     }
+    cout << '\n';
+    Ar->trackArticle(ar->id);
 }
