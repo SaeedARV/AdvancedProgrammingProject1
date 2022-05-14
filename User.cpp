@@ -23,7 +23,7 @@ void User::Register(string &username, string &password)
     newUser->username = username;
     newUser->password = this->hashPassword(password);
     this->users.push_back(newUser);
-    cout << "You are registered:)";
+    cout << "You are registered" << endl;
 }
 
 user *User::login(string &username, string &password)
@@ -62,7 +62,7 @@ user *User::getUser(string &username)
 
 int User::searchUser(string &username)
 {
-    for (int i = 0; i < (int)this->users.size(); i++)
+    for (int i = 0; i < this->users.size(); i++)
     {
         if (this->users[i]->username == username)
             return i;
@@ -79,7 +79,7 @@ bool User::vPassword(string &password)
 string User::hashPassword(string &password)
 {
     string a = "";
-    for (int i = 0; i < (int)password.length(); i++)
+    for (int i = 0; i < password.length(); i++)
     {
         a += ((password[i] + 33) % 65) ^ 'A';
     }
