@@ -9,7 +9,7 @@ struct article
 {
     std::string name;
     std::string date;
-    std::string Id;
+    std::string id;
     std::string body;
     std::vector<article *> refId;
     std::vector<user *> authors;
@@ -22,6 +22,7 @@ public:
     Article();
     ~Article();
     void addArticle(article *newArticle);
+    void trackArticle(std::string &id);
     bool vArticle(article *newArticle);
 };
 
