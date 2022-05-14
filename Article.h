@@ -5,7 +5,6 @@
 #include "User.h"
 
 struct user;
-
 struct article
 {
     std::string name;
@@ -22,10 +21,11 @@ private:
 public:
     Article();
     ~Article();
+    void addArticle(article *newArticle);
+    bool vArticle(article *newArticle);
 };
-/*
-void addArticle(Article *newArticle);
-std::vector<Article *> getArticles();
-*/
 
-#endif // ARTICLE_H_INCLUDED
+
+
+
+#endif
