@@ -22,9 +22,10 @@ class Article
 {
 private:
     vector<article *> allArticles;
+    const user *userLogin;
     bool minThreeParagraph(string &body);
     bool sizeBody(string &body);
-    const user *userLogin;
+    vector<string> split(string &str);
 
 public:
     Article(user *_userLogin);
