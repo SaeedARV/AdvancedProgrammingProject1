@@ -4,24 +4,30 @@
 #include <bits/stdc++.h>
 #include "User.h"
 
+using std::string;
+using std::vector;
+
 struct user;
 struct article
 {
-    std::string name;
-    std::string date;
-    std::string id;
-    std::string body;
-    std::vector<std::string> refId;
-    std::vector<user *> authors;
+    string name;
+    string date;
+    string id;
+    string body;
+    vector<string> refId;
+    vector<user *> authors;
 };
 
 class Article
 {
 private:
     vector<article *> allArticles;
+    bool minThreeParagraph(string &body);
+    bool sizeBody(string &body);
+    const user *userLogin;
 
 public:
-    Article();
+    Article(user *_userLogin);
     ~Article();
     string createId();
     void addArticle(article *newArticle);
