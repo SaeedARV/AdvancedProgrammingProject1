@@ -2,35 +2,56 @@
 using namespace std;
 #include "Article.h"
 
-
-Article::Article(){}
+Article::Article()
+{
+}
 
 Article::~Article() {}
 
 void Article::addArticle(article *newArticle)
 {
-    if(vArticle(newArticle)){
-        for(int i = 0; i < newArticle->authors.size(); i++){
+    if (vArticle(newArticle))
+    {
+        for (int i = 0; i < newArticle->authors.size(); i++)
+        {
             newArticle->authors[i]->articles.push_back(newArticle);
             allArticles.push_back(newArticle);
         }
     }
 }
 
-void Article::trackArticle(string &id){
-    for(int i = 0; i < allArticles.size(); i++){
-        if(allArticles[i]->id == id){
-            if(vArticle(allArticles[i])){
+void Article::trackArticle(string &id)
+{
+    for (int i = 0; i < allArticles.size(); i++)
+    {
+        if (allArticles[i]->id == id)
+        {
+            if (vArticle(allArticles[i]))
+            {
                 cout << "The article is accepted." << endl;
             }
-            else{
+            else
+            {
                 cout << "The article is rejected." << endl;
             }
         }
     }
 }
 
-bool Article::vArticle(article *newArticle){
+bool Article::vArticle(article *newArticle)
+{
     return true;
 }
 
+bool Article::minThreeParagraph(string &body)
+{
+    int paragraph = 1;
+    for (int i = 0; i < body.length(); i++)
+    {
+        if (body[i] == '\n')
+        {
+            paragraph++;
+        }
+    }
+    return paragraph >= 3;
+}
