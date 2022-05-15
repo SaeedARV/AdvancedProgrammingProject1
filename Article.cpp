@@ -55,3 +55,8 @@ bool Article::minThreeParagraph(string &body)
     }
     return paragraph >= 3;
 }
+
+bool Article::sizeBody(string &body)
+{
+    return body.length() > 100 && body.length() < 5000;
+}

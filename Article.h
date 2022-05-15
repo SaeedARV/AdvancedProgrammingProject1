@@ -20,6 +20,7 @@ class Article
 private:
     vector<article *> allArticles;
     bool minThreeParagraph(std::string &body);
+    bool sizeBody(std::string &body);
 
 public:
     Article();
