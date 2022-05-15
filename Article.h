@@ -29,6 +29,7 @@ private:
 public:
     Article(user *_userLogin);
     ~Article();
+    string createId();
     void addArticle(article *newArticle);
     void trackArticle(std::string &id);
     bool vArticle(article *newArticle);
