@@ -11,7 +11,7 @@ struct article
     std::string date;
     std::string id;
     std::string body;
-    std::vector<article *> refId;
+    std::vector<std::string> refId;
     std::vector<user *> authors;
 };
 
