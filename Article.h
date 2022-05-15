@@ -18,6 +18,8 @@ struct article
 class Article
 {
 private:
+    vector<article *> allArticles;
+
 public:
     Article();
     ~Article();
@@ -25,8 +27,5 @@ public:
     void trackArticle(std::string &id);
     bool vArticle(article *newArticle);
 };
-
-
-
 
 #endif

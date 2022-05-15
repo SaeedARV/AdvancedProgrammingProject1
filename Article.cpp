@@ -2,7 +2,6 @@
 using namespace std;
 #include "Article.h"
 
-vector<article *> allArticles;
 
 Article::Article(){}
 
@@ -32,5 +31,6 @@ void Article::trackArticle(string &id){
 }
 
 bool Article::vArticle(article *newArticle){
+    return true;
 }
 
