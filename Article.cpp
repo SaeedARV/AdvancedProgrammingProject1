@@ -90,7 +90,7 @@ vector<string> Article::split(string &str)
 bool Article::sizeBody(string &body)
 {
     vector<string> words = this->split(body);
-    return words.size() > 100 && words.size() < 5000;
+    return words.size() >= 100 && words.size() <= 5000;
 }
 
 bool Article::sizeName(string &name)
