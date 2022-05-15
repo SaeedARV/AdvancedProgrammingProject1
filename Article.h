@@ -25,6 +25,7 @@ private:
     const user *userLogin;
     bool minThreeParagraph(string &body);
     bool sizeBody(string &body);
+    bool sizeName(string &name);
     vector<string> split(string &str);
 
 public:
