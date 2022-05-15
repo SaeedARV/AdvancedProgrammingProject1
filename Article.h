@@ -24,9 +24,11 @@ private:
     vector<article *> allArticles;
     const user *userLogin;
     bool minThreeParagraph(string &body);
-    bool sizeBody(string &body);
-    bool sizeName(string &name);
+    bool countBodyWords(string &body);
+    bool countNameWords(string &name);
+    bool wordsCounter(string &body);
     vector<string> split(string &str);
+
 
 public:
     Article(user *_userLogin);
@@ -34,7 +36,8 @@ public:
     string createId();
     void addArticle(article *newArticle);
     void trackArticle(std::string &id);
-    bool vArticle(article *newArticle);
+    bool vArticle(article *_article);
+
 };
 
 #endif

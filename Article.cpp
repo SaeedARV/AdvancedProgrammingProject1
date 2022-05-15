@@ -2,9 +2,7 @@
 using namespace std;
 #include "Article.h"
 
-Article::Article(user *_userLogin) : userLogin{_userLogin}
-{
-}
+Article::Article(user *_userLogin) : userLogin{_userLogin}{}
 
 Article::~Article() {}
 
@@ -43,7 +41,7 @@ void Article::trackArticle(string &id)
     cout << "The article is rejected." << endl;
 }
 
-bool Article::vArticle(article *newArticle)
+bool Article::vArticle(article *_article)
 {
     return true;
 }
@@ -87,14 +85,30 @@ vector<string> Article::split(string &str)
     return words;
 }
 
-bool Article::sizeBody(string &body)
+bool Article::countBodyWords(string &body)
 {
     vector<string> words = this->split(body);
     return words.size() >= 100 && words.size() <= 5000;
 }
 
-bool Article::sizeName(string &name)
+bool Article::countNameWords(string &name)
 {
     vector<string> words = this->split(name);
     return words.size() <= 12;
+}
+
+bool Article::wordsCounter(string &body)
+{
+    vector<string> words = this->split(body);
+    map<string, int> wordCounter;
+
+    for(int i = 0; i < words.size(); i++){
+        wordCounter[words[i]]++;
+    }
+
+    for(auto word: wordCounter){
+        if(word.second > 50) return false;
+    }
+
+    return true;
 }
