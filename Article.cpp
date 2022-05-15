@@ -2,7 +2,7 @@
 using namespace std;
 #include "Article.h"
 
-Article::Article()
+Article::Article(user *_userLogin) : userLogin{_userLogin}
 {
 }
 
