@@ -14,7 +14,7 @@ int main()
     article *ar = new article;
     ar->body = "asdsadasdasd\nasddsg, asdfsdfdsfsd.";
     ar->authors.push_back(loginUser);
-    Article *Ar = new Article;
+    Article *Ar = new Article(loginUser);
     Ar->addArticle(ar);
     for(int i = 0; i < loginUser->articles.size(); i++){
         cout << loginUser->articles[i]->body << " ";
