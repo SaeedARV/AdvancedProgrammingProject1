@@ -2,7 +2,9 @@
 using namespace std;
 #include "Article.h"
 
-Article::Article(user *_userLogin) : userLogin{_userLogin}{}
+Article::Article(user *_userLogin) : userLogin{_userLogin}
+{
+}
 
 Article::~Article() {}
 
@@ -102,12 +104,21 @@ bool Article::wordsCounter(string &body)
     vector<string> words = this->split(body);
     map<string, int> wordCounter;
 
-    for(int i = 0; i < words.size(); i++){
+    for (int i = 0; i < words.size(); i++)
+    {
+        transform(words[i].begin(), words[i].end(), words[i].begin(), ::tolower);
+        char end = *(words[i].end() - 1);
+        if (end == '?' || end == '!' || end == '.' || end == ',' || end == ';')
+        {
+            *(words[i].end() - 1) = '\0';
+        }
         wordCounter[words[i]]++;
     }
 
-    for(auto word: wordCounter){
-        if(word.second > 50) return false;
+    for (auto word : wordCounter)
+    {
+        if (word.second > 50)
+            return false;
     }
 
     return true;
