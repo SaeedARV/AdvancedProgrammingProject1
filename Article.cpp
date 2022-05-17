@@ -112,3 +112,31 @@ bool Article::wordsCounter(string &body)
 
     return true;
 }
+
+bool Article::grammarCheck(string &body)
+{
+    int par1 = 0, par2 = 0;
+    for(int i = 0; i < body.size(); i++){
+        if(body[i] == ','){
+            if(i != body.size()-1 && body[i+1] != ' ') return false;
+            else if(i < body.size()-2 && body[i+1] == ' ' && body[i+2] == ' ') return false;
+        }
+        else if(body[i] == '?' || body[i] == '!' || body[i] == '.' || body[i] == ';'){
+            if(i != body.size()-1 && body[i+1] != ' ') return false;
+            else if(i < body.size()-2 && body[i+1] == ' ' && !isupper(body[i+2])) return false;
+        }
+        else if(body[i] == '\n'){
+            if(i != body.size()-1 && !isupper(body[i+1])) return false;
+        }
+        else if(body[i] == '('){
+            par1++;
+        }
+        else if(body[i] == ')'){
+            par2++;
+            if(par2 > par1) return false;
+        }
+    }
+    
+    if(par1 != par2) return false;
+    return true;
+}

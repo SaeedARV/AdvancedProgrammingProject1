@@ -27,6 +27,7 @@ private:
     bool countBodyWords(string &body);
     bool countNameWords(string &name);
     bool wordsCounter(string &body);
+    bool grammarCheck(string &body);
     vector<string> split(string &str);
 
 
