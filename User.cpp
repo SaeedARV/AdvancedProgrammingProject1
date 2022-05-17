@@ -62,9 +62,9 @@ user *User::getUser(string &username)
 
 int User::searchUser(string &username)
 {
-    for (int i = 0; i < this->users.size(); i++)
+    for (int i = 0; i < users.size(); i++)
     {
-        if (this->users[i]->username == username)
+        if (users[i]->username == username)
             return i;
     }
     return -1;
