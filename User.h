@@ -4,30 +4,34 @@
 #include <bits/stdc++.h>
 #include "Article.h"
 
+using std::string;
+using std::vector;
+
 struct article;
 struct user
 {
-    std::string username;
-    std::string password;
-    std::vector<article *> articles;
+    string username;
+    string password;
+    vector<article *> articles;
 };
 
 class User
 {
 private:
-    user *loginUser;
-    std::vector<user *> users;
-    std::string hashPassword(std::string &password);
-    int searchUser(std::string &username);
-    bool vPassword(std::string &password);
+    user *loginUser = nullptr;
+    static vector<user *> users;
+    string hashPassword(string &password);
+    int searchUser(string &username);
+    bool vPassword(string &password);
 
 public:
     User();
     ~User();
-    void Register(std::string &username, std::string &password);
-    user *login(std::string &username, std::string &password);
-    user *getUser(std::string &username);
+    void Register(string &username, string &password);
+    user *login(string &username, string &password);
+    user *getUser(string &username);
     user *getLoginUser();
+    bool isLogin();
 };
 
-#endif 
+#endif

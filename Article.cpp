@@ -2,7 +2,9 @@
 using namespace std;
 #include "Article.h"
 
-Article::Article(user *_userLogin) : userLogin{_userLogin}{}
+Article::Article(user *_userLogin) : userLogin{_userLogin}
+{
+}
 
 Article::~Article() {}
 
@@ -23,16 +25,16 @@ void Article::addArticle(article *newArticle)
         for (int i = 0; i < newArticle->authors.size(); i++)
         {
             newArticle->authors[i]->articles.push_back(newArticle);
-            allArticles.push_back(newArticle);
+            articles.push_back(newArticle);
         }
     }
 }
 
 void Article::trackArticle(string &id)
 {
-    for (int i = 0; i < allArticles.size(); i++)
+    for (int i = 0; i < articles.size(); i++)
     {
-        if (allArticles[i]->id == id)
+        if (articles[i]->id == id)
         {
             cout << "The article is accepted." << endl;
             return;
@@ -102,12 +104,21 @@ bool Article::wordsCounter(string &body)
     vector<string> words = this->split(body);
     map<string, int> wordCounter;
 
-    for(int i = 0; i < words.size(); i++){
-        wordCounter[words[i]]++;
+    for (auto word : words)
+    {
+        transform(word.begin(), word.end(), word.begin(), ::tolower);
+        char end = *(word.end() - 1);
+        if (end == '?' || end == '!' || end == '.' || end == ',' || end == ';')
+        {
+            *(word.end() - 1) = '\0';
+        }
+        wordCounter[word]++;
     }
 
-    for(auto word: wordCounter){
-        if(word.second > 50) return false;
+    for (auto word : wordCounter)
+    {
+        if (word.second > 50)
+            return false;
     }
 
     return true;

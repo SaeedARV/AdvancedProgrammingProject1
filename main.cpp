@@ -3,22 +3,48 @@ using namespace std;
 #include "User.h"
 #include "Article.h"
 
+void errore404()
+{
+    cout << "404\nNot found\n";
+}
+
 int main()
 {
-    User *a = new User;
-    string username = "ai", password = "a1#Algdf";
-    a->Register(username, password);
-    a->Register(username, password);
-    user *loginUser = a->login(username, password);
+    string work;
+    User *thisUser = new User;
+    user *loginUser = nullptr;
 
-    article *ar = new article;
-    ar->body = "asdsadasdasd\nasddsg, asdfsdfdsfsd.";
-    ar->authors.push_back(loginUser);
-    Article *Ar = new Article(loginUser);
-    Ar->addArticle(ar);
-    for(int i = 0; i < loginUser->articles.size(); i++){
-        cout << loginUser->articles[i]->body << " ";
+    while (!thisUser->isLogin())
+    {
+        cout << "----------------\n";
+        cout << "| Register | 0 |\n";
+        cout << "----------------\n";
+        cout << "|  Login   | 1 |\n";
+        cout << "----------------\n";
+        cout << "Please enter your Number: ";
+        cin >> work;
+        if (work == '0') // Register
+        {
+            string username, password;
+            cout << "Please enter your username: ";
+            cin >> username;
+            cout << "Please enter your password: ";
+            cin >> password;
+            thisUser->Register(username, password);
+        }
+        else if (work == '1') // Login
+        {
+            string username, password;
+            cout << "Please enter your username: ";
+            cin >> username;
+            cout << "Please enter your password: ";
+            cin >> password;
+            loginUser = thisUser->login(username, password);
+        }
+        else // 404
+        {
+            errore404();
+        }
     }
-    cout << '\n';
-    Ar->trackArticle(ar->id);
+    
 }
