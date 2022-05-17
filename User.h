@@ -21,7 +21,6 @@ private:
     user *loginUser = nullptr;
     static vector<user *> users;
     string hashPassword(string &password);
-    int searchUser(string &username);
     bool vPassword(string &password);
 
 public:
@@ -32,6 +31,7 @@ public:
     user *getUser(string &username);
     user *getLoginUser();
     bool isLogin();
+    static int searchUser(string &username);
 };
 
 #endif

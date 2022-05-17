@@ -23,7 +23,7 @@ int main()
         cout << "----------------\n";
         cout << "Please enter your Number: ";
         cin >> work;
-        if (work == '0') // Register
+        if (work == "0") // Register
         {
             string username, password;
             cout << "Please enter your username: ";
@@ -32,7 +32,7 @@ int main()
             cin >> password;
             thisUser->Register(username, password);
         }
-        else if (work == '1') // Login
+        else if (work == "1") // Login
         {
             string username, password;
             cout << "Please enter your username: ";
