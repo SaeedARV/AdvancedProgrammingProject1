@@ -85,3 +85,8 @@ string User::hashPassword(string &password)
     }
     return a;
 }
+
+bool User::isLogin()
+{
+    return (bool)this->loginUser;
+}

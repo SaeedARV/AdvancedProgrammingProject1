@@ -28,6 +28,7 @@ public:
     user *login(std::string &username, std::string &password);
     user *getUser(std::string &username);
     user *getLoginUser();
+    bool isLogin();
 };
 
 #endif 
