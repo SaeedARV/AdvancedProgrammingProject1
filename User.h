@@ -15,7 +15,7 @@ struct user
 class User
 {
 private:
-    user *loginUser;
+    user *loginUser = nullptr;
     std::vector<user *> users;
     std::string hashPassword(std::string &password);
     int searchUser(std::string &username);
