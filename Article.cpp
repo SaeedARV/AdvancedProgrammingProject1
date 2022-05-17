@@ -104,15 +104,15 @@ bool Article::wordsCounter(string &body)
     vector<string> words = this->split(body);
     map<string, int> wordCounter;
 
-    for (int i = 0; i < words.size(); i++)
+    for (auto word : words)
     {
-        transform(words[i].begin(), words[i].end(), words[i].begin(), ::tolower);
-        char end = *(words[i].end() - 1);
+        transform(word.begin(), word.end(), word.begin(), ::tolower);
+        char end = *(word.end() - 1);
         if (end == '?' || end == '!' || end == '.' || end == ',' || end == ';')
         {
-            *(words[i].end() - 1) = '\0';
+            *(word.end() - 1) = '\0';
         }
-        wordCounter[words[i]]++;
+        wordCounter[word]++;
     }
 
     for (auto word : wordCounter)
