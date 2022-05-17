@@ -25,16 +25,16 @@ void Article::addArticle(article *newArticle)
         for (int i = 0; i < newArticle->authors.size(); i++)
         {
             newArticle->authors[i]->articles.push_back(newArticle);
-            allArticles.push_back(newArticle);
+            articles.push_back(newArticle);
         }
     }
 }
 
 void Article::trackArticle(string &id)
 {
-    for (int i = 0; i < allArticles.size(); i++)
+    for (int i = 0; i < articles.size(); i++)
     {
-        if (allArticles[i]->id == id)
+        if (articles[i]->id == id)
         {
             cout << "The article is accepted." << endl;
             return;

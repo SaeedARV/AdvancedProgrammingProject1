@@ -21,7 +21,7 @@ struct article
 class Article
 {
 private:
-    vector<article *> allArticles;
+    static vector<article *> articles;
     const user *userLogin;
     bool minThreeParagraph(string &body);
     bool countBodyWords(string &body);
@@ -35,7 +35,7 @@ public:
     ~Article();
     string createId();
     void addArticle(article *newArticle);
-    void trackArticle(std::string &id);
+    void trackArticle(string &id);
     bool vArticle(article *_article);
 
 };
