@@ -3,12 +3,11 @@
 #include "User.h"
 using namespace std;
 
-Article::Article(user *_userLogin) : userLogin{_userLogin}
-{
-}
+Article::Article(user *_userLogin) : userLogin{_userLogin} {}
 
 Article::~Article() {}
 
+// TODO:edit createId way rand() % 10
 string Article::createId()
 {
     string id = "";
@@ -23,8 +22,13 @@ string currentTime()
 {
     time_t t = time(0);
     tm *now = localtime(&t);
-    string date = to_string(now->tm_year + 1900) + '/' + to_string(now->tm_mon + 1) + '/' + to_string(now->tm_mday) + ' ' +
-                  to_string(now->tm_hour) + ':' + to_string(now->tm_min) + ':' = to_string(now->tm_sec);
+    string date =
+        to_string(now->tm_year + 1900) + '/' +
+        to_string(now->tm_mon + 1) + '/' +
+        to_string(now->tm_mday) + ' ' +
+        to_string(now->tm_hour) + ':' +
+        to_string(now->tm_min) + ':' +
+        to_string(now->tm_sec);
 
     return date;
 }
@@ -44,9 +48,12 @@ void Article::addArticle(article *newArticle, vector<string> &usernames)
     }
 
     newArticle->date = currentTime();
+    newArticle->id = this->createId();
+    cout << "ID is " << newArticle->id;
 
     if (vArticle(newArticle))
     {
+        cout << "Posted for review ...\n";
         for (auto author : newArticle->authors)
         {
             author->acceptedArticles.push_back(newArticle);
@@ -55,6 +62,7 @@ void Article::addArticle(article *newArticle, vector<string> &usernames)
     }
     else
     {
+        cout << "rejected \n";
         for (auto author : newArticle->authors)
         {
             author->rejectedArticles.push_back(newArticle);
@@ -63,11 +71,12 @@ void Article::addArticle(article *newArticle, vector<string> &usernames)
     }
 }
 
+// TODO:edit trackArticle
 void Article::trackArticle(string &id)
 {
-    for (int i = 0; i < acceptedArticles.size(); i++)
+    for (auto acceptedArticle : this->acceptedArticles)
     {
-        if (acceptedArticles[i]->id == id)
+        if (acceptedArticle->id == id)
         {
             cout << "The article is accepted." << endl;
             return;
@@ -88,9 +97,9 @@ bool Article::vArticle(article *article)
 bool Article::minThreeParagraph(string &body)
 {
     int paragraph = 1;
-    for (int i = 0; i < body.length(); i++)
+    for (auto ch : body)
     {
-        if (body[i] == '\n')
+        if (ch == '\n')
         {
             paragraph++;
         }
@@ -163,7 +172,7 @@ bool Article::wordsCounter(string &body)
 
 bool Article::grammarCheck(string &body)
 {
-    int par1 = 0, par2 = 0;
+    int openPar = 0, closePar = 0;
     for (int i = 0; i < body.size(); i++)
     {
         if (body[i] == ',')
@@ -187,32 +196,30 @@ bool Article::grammarCheck(string &body)
         }
         else if (body[i] == '(')
         {
-            par1++;
+            openPar++;
         }
         else if (body[i] == ')')
         {
-            par2++;
-            if (par2 > par1)
+            closePar++;
+            if (closePar > openPar)
                 return false;
         }
     }
 
-    if (par1 != par2)
+    if (openPar != closePar)
         return false;
     return true;
 }
 
 void Article::getAllArticle()
 {
-    vector<article *> allAcceptedArticles = this->userLogin->acceptedArticles,
-                      allRejectedArticles = this->userLogin->rejectedArticles;
     cout << "Acceoted\n";
-    for (auto ar : allAcceptedArticles)
+    for (auto ar : this->userLogin->acceptedArticles)
     {
         cout << "ID: " << ar->id << "\nName: " << ar->name << "\n----------------------------------------------\n";
     }
     cout << "Rejected\n";
-    for (auto ar : allRejectedArticles)
+    for (auto ar : this->userLogin->rejectedArticles)
     {
         cout << "ID: " << ar->id << "\nName: " << ar->name << "\n----------------------------------------------\n";
     }
