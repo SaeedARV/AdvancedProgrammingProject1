@@ -32,7 +32,7 @@ private:
     vector<string> split(string &str);
     bool vArticle(article *_article);
     string createId();
-    article *searchArticle(string &id);
+    article *searchLoginUserArticle(string &id);
   
 public:
     Article(user *_userLogin);

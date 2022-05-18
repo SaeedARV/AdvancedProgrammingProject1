@@ -19,22 +19,27 @@ string Article::createId()
     return id;
 }
 
-string currentTime(){
+string currentTime()
+{
     time_t t = time(0);
-    tm* now = localtime(&t);
-    string date = to_string(now->tm_year + 1900) + '/' + to_string(now->tm_mon + 1) + '/'
-    + to_string(now->tm_mday) + ' ' + 
-    to_string(now->tm_hour) + ':' + to_string(now->tm_min) + ':' = to_string(now->tm_sec);
+    tm *now = localtime(&t);
+    string date = to_string(now->tm_year + 1900) + '/' + to_string(now->tm_mon + 1) + '/' + to_string(now->tm_mday) + ' ' +
+                  to_string(now->tm_hour) + ':' + to_string(now->tm_min) + ':' = to_string(now->tm_sec);
 
     return date;
 }
 
 void Article::addArticle(article *newArticle, vector<string> &usernames)
 {
-    for(auto username: usernames){
-        if(getUSer(username) != nullptr)
+    for (auto username : usernames)
+    {
+        if (getUSer(username))
         {
             newArticle->authors.push_back(getUSer(username));
+        }
+        else
+        {
+            cout << username << " not found";
         }
     }
 
@@ -42,13 +47,18 @@ void Article::addArticle(article *newArticle, vector<string> &usernames)
 
     if (vArticle(newArticle))
     {
-        for (int i = 0; i < newArticle->authors.size(); i++)
+        for (auto author : newArticle->authors)
         {
-            newArticle->authors[i]->articles.push_back(newArticle);
-            acceptedArticles.push_back(newArticle);
+            author->acceptedArticles.push_back(newArticle);
         }
+        acceptedArticles.push_back(newArticle);
     }
-    else{
+    else
+    {
+        for (auto author : newArticle->authors)
+        {
+            author->rejectedArticles.push_back(newArticle);
+        }
         rejectedArticles.push_back(newArticle);
     }
 }
@@ -190,19 +200,34 @@ bool Article::grammarCheck(string &body)
 
 void Article::getAllArticle()
 {
-    vector<article *> allArticle = this->userLogin->articles;
-    for (auto ar : allArticle)
+    vector<article *> allAcceptedArticles = this->userLogin->acceptedArticles,
+                      allRejectedArticles = this->userLogin->rejectedArticles;
+    cout << "Acceoted\n";
+    for (auto ar : allAcceptedArticles)
+    {
+        cout << "ID: " << ar->id << "\nName: " << ar->name << "\n----------------------------------------------\n";
+    }
+    cout << "Rejected\n";
+    for (auto ar : allRejectedArticles)
     {
         cout << "ID: " << ar->id << "\nName: " << ar->name << "\n----------------------------------------------\n";
     }
 }
 
-article *Article::searchArticle(string &id)
+article *Article::searchLoginUserArticle(string &id)
 {
-    for (auto ar : this->articles)
+    for (auto ar : this->userLogin->acceptedArticles)
     {
         if (ar->id == id)
         {
+            return ar;
+        }
+    }
+    for (auto ar : this->userLogin->rejectedArticles)
+    {
+        if (ar->id == id)
+        {
+            cout << "This Article is rejected.\n";
             return ar;
         }
     }

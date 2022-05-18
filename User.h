@@ -12,7 +12,8 @@ struct user
 {
     string username;
     string password;
-    vector<article *> articles;
+    vector<article *> acceptedArticles;
+    vector<article *> rejectedArticles;
 };
 
 class User
@@ -23,6 +24,7 @@ private:
     string hashPassword(string &password);
     bool vPassword(string &password);
     static int searchUser(string &username);
+
 public:
     User();
     ~User();
