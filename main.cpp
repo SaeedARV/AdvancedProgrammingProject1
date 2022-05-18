@@ -51,12 +51,18 @@ int main()
 
     while (true)
     {
-        cout << "-------------------\n";
-        cout << "| Add Article | 0 |\n";
-        cout << "-------------------\n";
+        cout << "------------------------\n";
+        cout << "| Add Article      | 0 |\n";
+        cout << "------------------------\n";
+        cout << "| Track Article    | 1 |\n";
+        cout << "------------------------\n";
+        cout << "| Get All Articles | 2 |\n";
+        cout << "------------------------\n";
+        cout << "| Get An Articles  | 3 |\n";
+        cout << "------------------------\n";
         cout << "Please enter your Number: ";
         cin >> work;
-        if (work == "0")
+        if (work == "0") // Add Article
         {
             article *ar = new article;
 
@@ -103,6 +109,24 @@ int main()
             ar->body;
 
             thisArticle->addArticle(ar, authors);
+        }
+        else if (work == "1") // Track Article
+        {
+            string id;
+            cout << "Please enter your article ID: ";
+            cin >> id;
+            thisArticle->trackArticle(id);
+        }
+        else if (work == "2") // Get All Articles
+        {
+            thisArticle->getAllArticle();
+        }
+        else if (work == "3") // Get Arti
+        {
+            string id;
+            cout << "Please enter your article ID: ";
+            cin >> id;
+            thisArticle->getArticle(id);
         }
     }
 }
