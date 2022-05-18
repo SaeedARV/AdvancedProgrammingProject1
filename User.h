@@ -23,7 +23,6 @@ private:
     static vector<user *> users;
     string hashPassword(string &password);
     bool vPassword(string &password);
-    static int searchUser(string &username);
 
 public:
     User();
