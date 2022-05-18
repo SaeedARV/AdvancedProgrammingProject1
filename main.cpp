@@ -58,7 +58,7 @@ int main()
         cout << "------------------------\n";
         cout << "| Get All Articles | 2 |\n";
         cout << "------------------------\n";
-        cout << "| Get An Articles  | 3 |\n";
+        cout << "| Get An Article   | 3 |\n";
         cout << "------------------------\n";
         cout << "Please enter your Number: ";
         cin >> work;
@@ -127,6 +127,10 @@ int main()
             cout << "Please enter your article ID: ";
             cin >> id;
             thisArticle->getArticle(id);
+        }
+        else // else
+        {
+            error404();
         }
     }
 }
