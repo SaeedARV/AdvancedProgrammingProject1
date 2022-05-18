@@ -22,16 +22,15 @@ private:
     static vector<user *> users;
     string hashPassword(string &password);
     bool vPassword(string &password);
-
+    static int searchUser(string &username);
 public:
     User();
     ~User();
     void Register(string &username, string &password);
     user *login(string &username, string &password);
-    user *getUser(string &username);
+    static user *getUser(string &username);
     user *getLoginUser();
     bool isLogin();
-    static int searchUser(string &username);
 };
 
 #endif
