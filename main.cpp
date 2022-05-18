@@ -128,7 +128,7 @@ int main()
             cin >> id;
             thisArticle->getArticle(id);
         }
-        else // else
+        else // 404
         {
             error404();
         }
