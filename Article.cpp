@@ -76,9 +76,13 @@ void Article::trackArticle(string &id)
     cout << "The article is rejected." << endl;
 }
 
-bool Article::vArticle(article *_article)
+bool Article::vArticle(article *article)
 {
-    return true;
+    return (this->countNameWords(article->name)) &&
+           (this->countBodyWords(article->body)) &&
+           (this->minThreeParagraph(article->body)) &&
+           (this->grammarCheck(article->body)) &&
+           (this->wordsCounter(article->body));
 }
 
 bool Article::minThreeParagraph(string &body)
