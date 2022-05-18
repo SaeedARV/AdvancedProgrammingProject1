@@ -32,11 +32,16 @@ private:
     vector<string> split(string &str);
     bool vArticle(article *_article);
     string createId();
+    article *searchArticle(string &id);
+  
 public:
     Article(user *_userLogin);
     ~Article();
     void addArticle(article *newArticle, vector<string> &usernames);
     void trackArticle(string &id);
+    void getAllArticle();
+    void getArticle(string &id);
+
 };
 
 #endif

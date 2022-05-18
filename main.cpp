@@ -3,7 +3,7 @@ using namespace std;
 #include "User.h"
 #include "Article.h"
 
-void errore404()
+void error404()
 {
     cout << "404\nNot found\n";
 }
@@ -43,8 +43,90 @@ int main()
         }
         else // 404
         {
-            errore404();
+            error404();
         }
     }
-    
+
+    Article *thisArticle = new Article(loginUser);
+
+    while (true)
+    {
+        cout << "------------------------\n";
+        cout << "| Add Article      | 0 |\n";
+        cout << "------------------------\n";
+        cout << "| Track Article    | 1 |\n";
+        cout << "------------------------\n";
+        cout << "| Get All Articles | 2 |\n";
+        cout << "------------------------\n";
+        cout << "| Get An Articles  | 3 |\n";
+        cout << "------------------------\n";
+        cout << "Please enter your Number: ";
+        cin >> work;
+        if (work == "0") // Add Article
+        {
+            article *ar = new article;
+
+            string name;
+            cout << "Please enter the name of your article: ";
+            cin >> name;
+            ar->name = name;
+
+            cout << "Please enter the number of reference: \n";
+            int n;
+            cin >> n;
+            cout << "Please enter reference IDs: \n";
+            vector<string> refIds;
+            string refId;
+            for (int i = 0; i < n; i++)
+            {
+                cin >> refId;
+                refIds.push_back(refId);
+            }
+            ar->refId = refIds;
+
+            cout << "Please enter the number of authors: \n";
+            cin >> n;
+            cout << "Please enter username of authors: \n";
+            string author;
+            vector<string> authors;
+            for (int i = 0; i < n; i++)
+            {
+                cin >> author;
+                authors.push_back(author);
+            }
+
+            cout << "Please enter the body of your article: (Put an enter at the end of your text) \n";
+            string body = "";
+            string line;
+            while (getline(cin, line))
+            {
+                if (line.empty())
+                {
+                    break;
+                }
+                body += line + '\n';
+            }
+            ar->body;
+
+            thisArticle->addArticle(ar, authors);
+        }
+        else if (work == "1") // Track Article
+        {
+            string id;
+            cout << "Please enter your article ID: ";
+            cin >> id;
+            thisArticle->trackArticle(id);
+        }
+        else if (work == "2") // Get All Articles
+        {
+            thisArticle->getAllArticle();
+        }
+        else if (work == "3") // Get Arti
+        {
+            string id;
+            cout << "Please enter your article ID: ";
+            cin >> id;
+            thisArticle->getArticle(id);
+        }
+    }
 }
