@@ -51,13 +51,13 @@ user *User::getLoginUser()
 
 user *User::getUser(string &username)
 {
-    int user = this->searchUser(username);
+    int user = searchUser(username);
     if (user == -1)
     {
         cout << "not found user!!" << endl;
         return nullptr;
     }
-    return this->users[user];
+    return users[user];
 }
 
 int User::searchUser(string &username)

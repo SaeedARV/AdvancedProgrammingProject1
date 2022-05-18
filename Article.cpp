@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
-using namespace std;
 #include "Article.h"
+#include "User.h"
+using namespace std;
 
 Article::Article(user *_userLogin) : userLogin{_userLogin}
 {
@@ -18,23 +19,45 @@ string Article::createId()
     return id;
 }
 
-void Article::addArticle(article *newArticle)
+string currentTime(){
+    time_t t = time(0);
+    tm* now = localtime(&t);
+    string date = to_string(now->tm_year + 1900) + '/' + to_string(now->tm_mon + 1) + '/'
+    + to_string(now->tm_mday) + ' ' + 
+    to_string(now->tm_hour) + ':' + to_string(now->tm_min) + ':' = to_string(now->tm_sec);
+
+    return date;
+}
+
+void Article::addArticle(article *newArticle, vector<string> &usernames)
 {
+    for(auto username: usernames){
+        if(getUSer(username) != nullptr)
+        {
+            newArticle->authors.push_back(getUSer(username));
+        }
+    }
+
+    newArticle->date = currentTime();
+
     if (vArticle(newArticle))
     {
         for (int i = 0; i < newArticle->authors.size(); i++)
         {
             newArticle->authors[i]->articles.push_back(newArticle);
-            articles.push_back(newArticle);
+            acceptedArticles.push_back(newArticle);
         }
+    }
+    else{
+        rejectedArticles.push_back(newArticle);
     }
 }
 
 void Article::trackArticle(string &id)
 {
-    for (int i = 0; i < articles.size(); i++)
+    for (int i = 0; i < acceptedArticles.size(); i++)
     {
-        if (articles[i]->id == id)
+        if (acceptedArticles[i]->id == id)
         {
             cout << "The article is accepted." << endl;
             return;
