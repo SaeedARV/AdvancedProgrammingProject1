@@ -29,7 +29,7 @@ private:
     bool wordsCounter(string &body);
     bool grammarCheck(string &body);
     vector<string> split(string &str);
-
+    article *searchArticle(string &id);
 
 public:
     Article(user *_userLogin);
@@ -38,7 +38,8 @@ public:
     void addArticle(article *newArticle);
     void trackArticle(string &id);
     bool vArticle(article *_article);
-
+    void getAllArticle();
+    void getArticle(string &id);
 };
 
 #endif
