@@ -68,13 +68,16 @@ int main()
 
             string name;
             cout << "Please enter the name of your article: ";
-            cin >> name;
+            getline(cin >> ws, name);
             ar->name = name;
 
-            cout << "Please enter the number of reference: \n";
+            cout << "Please enter the number of reference: ";
             int n;
             cin >> n;
-            cout << "Please enter reference IDs: \n";
+            if (n > 0)
+            {
+                cout << "Please enter reference IDs: \n";
+            }
             vector<string> refIds;
             string refId;
             for (int i = 0; i < n; i++)
@@ -84,29 +87,26 @@ int main()
             }
             ar->refId = refIds;
 
-            cout << "Please enter the number of authors: \n";
+            cout << "Please enter the number of authors: ";
             cin >> n;
-            cout << "Please enter username of authors: \n";
+            if (n > 0)
+            {
+                cout << "Please enter username of authors: \n";
+            }
             string author;
             vector<string> authors;
+            string usernameLoginUser = thisUser->getLoginUser()->username;
+            authors.push_back(usernameLoginUser);
             for (int i = 0; i < n; i++)
             {
                 cin >> author;
                 authors.push_back(author);
             }
 
-            cout << "Please enter the body of your article: (Put an enter at the end of your text) \n";
-            string body = "";
-            string line;
-            while (getline(cin, line))
-            {
-                if (line.empty())
-                {
-                    break;
-                }
-                body += line + '\n';
-            }
-            ar->body;
+            cout << "Please enter the body of your article: (Put an back tike (`) at the end of your text) \n";
+            string body;
+            getline(cin >> ws, body, '`');
+            ar->body = body;
 
             thisArticle->addArticle(ar, authors);
         }

@@ -16,7 +16,7 @@ string Article::createId()
     string id = "";
     for (int i = 0; i < 10; i++)
     {
-        id += char(rand() % 10);
+        id += to_string(rand() % 10);
     }
     return id;
 }
@@ -52,7 +52,7 @@ void Article::addArticle(article *newArticle, vector<string> &usernames)
 
     newArticle->date = currentTime();
     newArticle->id = this->createId();
-    cout << "ID is " << newArticle->id;
+    cout << "ID is " << newArticle->id << '\n';
 
     if (vArticle(newArticle))
     {
