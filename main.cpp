@@ -21,7 +21,7 @@ int main()
         cout << "----------------\n";
         cout << "|  Login   | 1 |\n";
         cout << "----------------\n";
-        cout << "Please enter your Number: ";
+        cout << "Please enter a Number: ";
         cin >> work;
         if (work == "0") // Register
         {
@@ -60,7 +60,7 @@ int main()
         cout << "------------------------\n";
         cout << "| Get An Article   | 3 |\n";
         cout << "------------------------\n";
-        cout << "Please enter your Number: ";
+        cout << "Please enter a Number: ";
         cin >> work;
         if (work == "0") // Add Article
         {

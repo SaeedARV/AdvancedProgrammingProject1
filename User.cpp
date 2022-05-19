@@ -25,7 +25,7 @@ void User::Register(string &username, string &password)
     newUser->username = username;
     newUser->password = this->hashPassword(password);
     users.push_back(newUser);
-    cout << "You are registered" << endl;
+    cout << "You are registered." << endl;
 }
 
 user *User::login(string &username, string &password)

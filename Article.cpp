@@ -10,12 +10,12 @@ Article::Article(user *_userLogin) : userLogin{_userLogin} {}
 
 Article::~Article() {}
 
-// TODO:edit createId way rand() % 10
 string Article::createId()
 {
     string id = "";
     for (int i = 0; i < 10; i++)
     {
+        srand((unsigned) time(0));
         id += to_string(rand() % 10);
     }
     return id;
@@ -46,16 +46,17 @@ void Article::addArticle(article *newArticle, vector<string> &usernames)
         }
         else
         {
-            cout << username << " not found";
+            cout << username << " is not found.";
         }
     }
 
     newArticle->date = currentTime();
     newArticle->id = this->createId();
-    cout << "ID is " << newArticle->id << '\n';
+    cout << "The ID is: " << newArticle->id << "\n";
 
     if (vArticle(newArticle))
     {
+        //todo: better text
         cout << "Posted for review ...\n";
         for (auto author : newArticle->authors)
         {
@@ -65,7 +66,7 @@ void Article::addArticle(article *newArticle, vector<string> &usernames)
     }
     else
     {
-        cout << "rejected \n";
+        cout << "Your article is rejected.\n";
         for (auto author : newArticle->authors)
         {
             author->rejectedArticles.push_back(newArticle);
@@ -81,11 +82,11 @@ void Article::trackArticle(string &id)
     {
         if (acceptedArticle->id == id)
         {
-            cout << "The article is accepted." << endl;
+            cout << "This article is accepted." << endl;
             return;
         }
     }
-    cout << "The article is rejected." << endl;
+    cout << "This article is rejected." << endl;
 }
 
 bool Article::vArticle(article *article)
@@ -187,7 +188,7 @@ bool Article::grammarCheck(string &body)
         }
         else if (body[i] == '?' || body[i] == '!' || body[i] == '.' || body[i] == ';')
         {
-            if (i != body.size() - 1 && body[i + 1] != ' ')
+            if (i != body.size() - 1 && body[i + 1] != ' ' && body[i+1] != '\n')
                 return false;
             else if (i < body.size() - 2 && body[i + 1] == ' ' && !isupper(body[i + 2]))
                 return false;
@@ -216,12 +217,12 @@ bool Article::grammarCheck(string &body)
 
 void Article::getAllArticle()
 {
-    cout << "Acceoted\n";
+    cout << "Acceoted articles:\n";
     for (auto ar : this->userLogin->acceptedArticles)
     {
         cout << "ID: " << ar->id << "\nName: " << ar->name << "\n----------------------------------------------\n";
     }
-    cout << "Rejected\n";
+    cout << "Rejected articles:\n";
     for (auto ar : this->userLogin->rejectedArticles)
     {
         cout << "ID: " << ar->id << "\nName: " << ar->name << "\n----------------------------------------------\n";
@@ -257,11 +258,11 @@ void Article::getArticle(string &id)
             << "ID: " << ar->id
             << "\nName: " << ar->name
             << "\nDate: " << ar->date
-            << "\nText: " << ar->body
+            << "\nText:\n " << ar->body
             << '\n';
     }
     else
     {
-        cout << "not found\n";
+        cout << "This article is not found.\n";
     }
 }
