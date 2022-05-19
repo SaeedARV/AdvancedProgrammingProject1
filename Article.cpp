@@ -3,6 +3,9 @@
 #include "User.h"
 using namespace std;
 
+vector<article *> Article::acceptedArticles = {};
+vector<article *> Article::rejectedArticles = {};
+
 Article::Article(user *_userLogin) : userLogin{_userLogin} {}
 
 Article::~Article() {}
@@ -37,9 +40,9 @@ void Article::addArticle(article *newArticle, vector<string> &usernames)
 {
     for (auto username : usernames)
     {
-        if (getUSer(username))
+        if (User::getUser(username))
         {
-            newArticle->authors.push_back(getUSer(username));
+            newArticle->authors.push_back(User::getUser(username));
         }
         else
         {
@@ -247,7 +250,7 @@ article *Article::searchLoginUserArticle(string &id)
 
 void Article::getArticle(string &id)
 {
-    article *ar = this->searchArticle(id);
+    article *ar = this->searchLoginUserArticle(id);
     if (ar)
     {
         cout
