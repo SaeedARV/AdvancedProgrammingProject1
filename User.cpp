@@ -7,6 +7,8 @@ User::User() {}
 
 User::~User() {}
 
+vector<user *> User::users = {};
+
 void User::Register(string &username, string &password)
 {
     if (this->getUser(username))
@@ -22,7 +24,7 @@ void User::Register(string &username, string &password)
     user *newUser = new user;
     newUser->username = username;
     newUser->password = this->hashPassword(password);
-    this->users.push_back(newUser);
+    users.push_back(newUser);
     cout << "You are registered" << endl;
 }
 
@@ -56,7 +58,6 @@ user *User::getUser(string &username)
         if (us->username == username)
             return us;
     }
-    cout << "not found user!!" << endl;
     return nullptr;
 }
 
