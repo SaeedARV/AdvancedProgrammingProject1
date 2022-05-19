@@ -9,7 +9,7 @@ User::~User() {}
 
 void User::Register(string &username, string &password)
 {
-    if (this->searchUser(username) != -1)
+    if (this->getUser(username))
     {
         cout << username << " is not available!! Please try another one." << endl;
         return;
@@ -28,16 +28,16 @@ void User::Register(string &username, string &password)
 
 user *User::login(string &username, string &password)
 {
-    int user = this->searchUser(username);
-    if (user == -1)
+    user *us = this->getUser(username);
+    if (!us)
     {
         cout << username << " is not found!! Please try again." << endl;
         return nullptr;
     }
-    if (this->users[user]->password == this->hashPassword(password))
+    if (us->password == this->hashPassword(password))
     {
         cout << "You are logged in." << endl;
-        this->loginUser = this->users[user];
+        this->loginUser = us;
         return this->loginUser;
     }
     cout << "Password is not correct." << endl;
@@ -51,23 +51,13 @@ user *User::getLoginUser()
 
 user *User::getUser(string &username)
 {
-    int user = searchUser(username);
-    if (user == -1)
+    for (auto us : users)
     {
-        cout << "not found user!!" << endl;
-        return nullptr;
+        if (us->username == username)
+            return us;
     }
-    return users[user];
-}
-
-int User::searchUser(string &username)
-{
-    for (int i = 0; i < users.size(); i++)
-    {
-        if (users[i]->username == username)
-            return i;
-    }
-    return -1;
+    cout << "not found user!!" << endl;
+    return nullptr;
 }
 
 bool User::vPassword(string &password)
@@ -79,9 +69,9 @@ bool User::vPassword(string &password)
 string User::hashPassword(string &password)
 {
     string a = "";
-    for (int i = 0; i < password.length(); i++)
+    for (auto pass : password)
     {
-        a += ((password[i] + 33) % 65) ^ 'A';
+        a += ((pass + 33) % 65) ^ 'A';
     }
     return a;
 }

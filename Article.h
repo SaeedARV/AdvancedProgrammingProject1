@@ -24,12 +24,12 @@ private:
     static vector<article *> acceptedArticles;
     static vector<article *> rejectedArticles;
     const user *userLogin;
+    vector<string> split(string &str);
     bool minThreeParagraph(string &body);
     bool countBodyWords(string &body);
     bool countNameWords(string &name);
     bool wordsCounter(string &body);
     bool grammarCheck(string &body);
-    vector<string> split(string &str);
     bool vArticle(article *_article);
     string createId();
     article *searchLoginUserArticle(string &id);
