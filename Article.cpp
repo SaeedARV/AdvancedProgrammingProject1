@@ -10,13 +10,13 @@ Article::Article(user *_userLogin) : userLogin{_userLogin} {}
 
 Article::~Article() {}
 
-// TODO:edit createId way rand() % 10
 string Article::createId()
 {
     string id = "";
     for (int i = 0; i < 10; i++)
     {
-        id += char(rand() % 10);
+        srand((unsigned) time(0));
+        id += to_string(rand() % 10);
     }
     return id;
 }
