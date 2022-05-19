@@ -21,7 +21,7 @@ int main()
         cout << "----------------\n";
         cout << "|  Login   | 1 |\n";
         cout << "----------------\n";
-        cout << "Please enter your Number: ";
+        cout << "Please enter a Number: ";
         cin >> work;
         if (work == "0") // Register
         {
@@ -60,14 +60,14 @@ int main()
         cout << "------------------------\n";
         cout << "| Get An Article   | 3 |\n";
         cout << "------------------------\n";
-        cout << "Please enter your Number: ";
+        cout << "Please enter a Number: ";
         cin >> work;
         if (work == "0") // Add Article
         {
             article *ar = new article;
 
             string name;
-            cout << "Please enter the name of your article: ";
+            cout << "Please enter the name of your article: \n";
             cin >> name;
             ar->name = name;
 
@@ -84,7 +84,7 @@ int main()
             }
             ar->refId = refIds;
 
-            cout << "Please enter the number of authors: \n";
+            cout << "Please enter the number of authors: ";
             cin >> n;
             cout << "Please enter username of authors: \n";
             string author;
