@@ -81,3 +81,8 @@ bool User::isLogin()
 {
     return (bool)this->loginUser;
 }
+
+void User::logout()
+{
+    this->loginUser = nullptr;
+}
