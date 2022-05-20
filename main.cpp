@@ -62,9 +62,9 @@ int main()
             cout << "------------------------\n";
             cout << "| Get An Article   | 3 |\n";
             cout << "------------------------\n";
-            cout << "| Logout           | 3 |\n";
+            cout << "| Logout           | 4 |\n";
             cout << "------------------------\n";
-            cout << "| Exit             | 4 |\n";
+            cout << "| Exit             | 5 |\n";
             cout << "------------------------\n";
             cout << "Please enter a Number: ";
             cin >> work;
@@ -140,7 +140,7 @@ int main()
                 cout << "You are logged out!\n";
                 delete thisArticle;
             }
-            else if (work == 4) // Exit
+            else if (work == "5") // Exit
             {
                 cout << "Good bye!\n";
                 return 0;
