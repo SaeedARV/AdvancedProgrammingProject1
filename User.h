@@ -32,6 +32,7 @@ public:
     static user *getUser(string &username);
     user *getLoginUser();
     bool isLogin();
+    void logout();
 };
 
 #endif
