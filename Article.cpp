@@ -13,9 +13,9 @@ Article::~Article() {}
 string Article::createId()
 {
     string id = "";
+    srand((unsigned)time(0));
     for (int i = 0; i < 10; i++)
     {
-        srand((unsigned)time(0));
         id += to_string(rand() % 10);
     }
     return id;
