@@ -15,7 +15,7 @@ string Article::createId()
     string id = "";
     for (int i = 0; i < 10; i++)
     {
-        srand((unsigned) time(0));
+        srand((unsigned)time(0));
         id += to_string(rand() % 10);
     }
     return id;
@@ -56,7 +56,7 @@ void Article::addArticle(article *newArticle, vector<string> &usernames)
 
     if (vArticle(newArticle))
     {
-        //todo: better text
+        // todo: better text
         cout << "Posted for review ...\n";
         for (auto author : newArticle->authors)
         {
@@ -160,7 +160,7 @@ bool Article::wordsCounter(string &body)
         char end = *(word.end() - 1);
         if (end == '?' || end == '!' || end == '.' || end == ',' || end == ';')
         {
-            *(word.end() - 1) = '\0';
+            *(word.end()) = '\0';
         }
         wordCounter[word]++;
     }
@@ -188,7 +188,7 @@ bool Article::grammarCheck(string &body)
         }
         else if (body[i] == '?' || body[i] == '!' || body[i] == '.' || body[i] == ';')
         {
-            if (i != body.size() - 1 && body[i + 1] != ' ' && body[i+1] != '\n')
+            if (i != body.size() - 1 && body[i + 1] != ' ' && body[i + 1] != '\n')
                 return false;
             else if (i < body.size() - 2 && body[i + 1] == ' ' && !isupper(body[i + 2]))
                 return false;
