@@ -115,18 +115,53 @@ int **Article::lcs(string &str1, string &str2)
     return r;
 }
 
-// TODO:edit trackArticle
 void Article::trackArticle(string &id)
 {
-    for (auto acceptedArticle : this->acceptedArticles)
+    int i = 0;
+    for (auto notExaminedArticle1: this->userLogin->notExaminedArticles)
     {
-        if (acceptedArticle->id == id)
+        if (notExaminedArticle1->id == id)
         {
-            cout << "This article is accepted." << endl;
+            for(auto notExaminedArticle2: this->notExaminedArticles)
+            {
+                if(notExaminedArticle1.id != notExaminedArticle2.id)
+                {
+                    double sim = similarity(notExaminedArticle1.body, notExaminedArticle2.body)
+                    *2/(notExaminedArticle1.body.size()+notExaminedArticle2.body.size());
+
+                    if(sim > 0.5)
+                    {
+                        cout << "This article is rejected." << endl;
+                        rejectedArticles.push_back(notExaminedArticle1);
+                        notExaminedArticles.erase(notExaminedArticles.begin()+i);
+                        return;
+                    }
+                }
+            }
+                acceptedArticles.push_back(notExaminedArticle1);
+                notExaminedArticles.erase(notExaminedArticles.begin()+i);
+                cout << "This article is accepted." << endl;    
+        }
+        i++;
+    }
+
+    for (auto ar : this->userLogin->acceptedArticles)
+    {
+        if (ar->id == id)
+        {
+            cout << "This article is accepted." << endl;  
             return;
         }
     }
-    cout << "This article is rejected." << endl;
+    for (auto ar : this->userLogin->rejectedArticles)
+    {
+        if (ar->id == id)
+        {
+            cout << "This Article is rejected.\n";
+            return;
+        }
+    }
+
 }
 
 bool Article::vArticle(article *article)
