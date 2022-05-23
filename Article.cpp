@@ -75,6 +75,46 @@ void Article::addArticle(article *newArticle, vector<string> &usernames)
     }
 }
 
+int **Article::lcs(string &str1, string &str2)
+{
+    int **r;
+    r[0] = new int[2];
+    r[1] = new int[2];
+    r[0][0] = 0;
+    r[0][1] = 0;
+    r[1][0] = 0;
+    r[1][1] = 0;
+    int maxStr = 0;
+
+    for (int i = 0; i < str1.length(); i++)
+    {
+        for (int j = 0; j < str2.length(); j++)
+        {
+            string a = "";
+            for (int k = i; k <= j; k++)
+            {
+                a += str1[k];
+            }
+            
+            int i2 = str2.find(a);
+            int len = a.length();
+            if (i2 == -1)
+            {
+                break;
+            }
+            else if (len > maxStr)
+            {
+                maxStr = len;
+                r[0][0] = i;
+                r[0][1] = j;
+                r[1][0] = i2;
+                r[1][1] = i2 + maxStr - 1;
+            }
+        }
+    }
+    return r;
+}
+
 // TODO:edit trackArticle
 void Article::trackArticle(string &id)
 {
