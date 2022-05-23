@@ -12,6 +12,7 @@ struct user
 {
     string username;
     string password;
+    vector<article *> notExaminedArticles;
     vector<article *> acceptedArticles;
     vector<article *> rejectedArticles;
 };
