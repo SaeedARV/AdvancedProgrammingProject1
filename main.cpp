@@ -18,6 +18,7 @@ int main()
     {
         while (!thisUser->isLogin())
         {
+            //todo: add exit
             cout << "----------------\n";
             cout << "| Register | 0 |\n";
             cout << "----------------\n";

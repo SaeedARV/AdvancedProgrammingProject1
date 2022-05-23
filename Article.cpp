@@ -116,6 +116,8 @@ int **Article::lcs(string &str1, string &str2)
     return r;
 }
 
+//todo: remember authors 
+//todo: check ref
 void Article::trackArticle(string &id)
 {
     int i = 0;
@@ -250,6 +252,7 @@ bool Article::wordsCounter(string &body)
     return true;
 }
 
+//todo: last char special is ok
 bool Article::grammarCheck(string &body)
 {
     int openPar = 0, closePar = 0;
@@ -293,11 +296,14 @@ bool Article::grammarCheck(string &body)
 
 void Article::getAllArticle()
 {
+    //todo: change
+    //todo: if size != 0
     cout << "notExaminedArticles:\n";
     for (auto ar : this->userLogin->notExaminedArticles)
     {
         cout << "ID: " << ar->id << "\nName: " << ar->name << "\n----------------------------------------------\n";
     }
+
 
     cout << "Acceoted articles:\n";
     for (auto ar : this->userLogin->acceptedArticles)
