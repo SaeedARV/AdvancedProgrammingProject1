@@ -125,10 +125,10 @@ void Article::trackArticle(string &id)
         {
             for(auto notExaminedArticle2: this->notExaminedArticles)
             {
-                if(notExaminedArticle1.id != notExaminedArticle2.id)
+                if(notExaminedArticle1->id != notExaminedArticle2->id)
                 {
-                    double sim = similarity(notExaminedArticle1.body, notExaminedArticle2.body)
-                    *2/(notExaminedArticle1.body.size()+notExaminedArticle2.body.size());
+                    double sim = similarity(notExaminedArticle1->body, notExaminedArticle2->body)
+                    *2/(notExaminedArticle1->body.size()+notExaminedArticle2->body.size());
 
                     if(sim > 0.5)
                     {
