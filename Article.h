@@ -31,9 +31,10 @@ private:
     bool wordsCounter(string &body);
     bool grammarCheck(string &body);
     bool vArticle(article *_article);
+    int **lcs(string &str1, string &str2);
     string createId();
     article *searchLoginUserArticle(string &id);
-  
+
 public:
     Article(user *_userLogin);
     ~Article();
@@ -41,7 +42,6 @@ public:
     void trackArticle(string &id);
     void getAllArticle();
     void getArticle(string &id);
-
 };
 
 #endif
