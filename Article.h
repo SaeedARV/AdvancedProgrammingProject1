@@ -33,7 +33,8 @@ private:
     bool vArticle(article *_article);
     string createId();
     article *searchLoginUserArticle(string &id);
-  
+    int **lcs(string &str1, string &str2);
+    double similarity(string &a, string &b);
 public:
     Article(user *_userLogin);
     ~Article();

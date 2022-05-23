@@ -266,3 +266,22 @@ void Article::getArticle(string &id)
         cout << "This article is not found.\n";
     }
 }
+
+double Article::similarity(string &a, string &b){
+    double ans = 0;
+    int **temp = lcs(a, b);
+
+    if(temp[0][1]-temp[0][0]+1 < 50) return ans;
+
+    ans += temp[0][1]-temp[0][0]+1;
+
+    string p = a.substr(0, temp[0][0]+1), q = b.substr(0, temp[1][0]+1);
+    string r = a.substr(temp[0][1]+1, a.size()), s = b.substr(temp[1][1]+1, b.size());
+    ans += similarity(p, q);
+    ans += similarity(r, s);
+    
+    return ans;
+}
+
+     
+    
