@@ -21,6 +21,7 @@ struct article
 class Article
 {
 private:
+    static vector<article *> notExaminedArticles;
     static vector<article *> acceptedArticles;
     static vector<article *> rejectedArticles;
     const user *userLogin;

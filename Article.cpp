@@ -3,6 +3,7 @@
 #include "User.h"
 using namespace std;
 
+vector<article *> Article::notExaminedArticles = {};
 vector<article *> Article::acceptedArticles = {};
 vector<article *> Article::rejectedArticles = {};
 
@@ -60,9 +61,9 @@ void Article::addArticle(article *newArticle, vector<string> &usernames)
         cout << "Posted for review ...\n";
         for (auto author : newArticle->authors)
         {
-            author->acceptedArticles.push_back(newArticle);
+            author->notExaminedArticles.push_back(newArticle);
         }
-        acceptedArticles.push_back(newArticle);
+        notExaminedArticles.push_back(newArticle);
     }
     else
     {
@@ -95,7 +96,7 @@ int **Article::lcs(string &str1, string &str2)
             {
                 a += str1[k];
             }
-            
+
             int i2 = str2.find(a);
             int len = a.length();
             if (i2 == -1)
@@ -257,6 +258,12 @@ bool Article::grammarCheck(string &body)
 
 void Article::getAllArticle()
 {
+    cout << "notExaminedArticles:\n";
+    for (auto ar : this->userLogin->notExaminedArticles)
+    {
+        cout << "ID: " << ar->id << "\nName: " << ar->name << "\n----------------------------------------------\n";
+    }
+
     cout << "Acceoted articles:\n";
     for (auto ar : this->userLogin->acceptedArticles)
     {
@@ -271,6 +278,15 @@ void Article::getAllArticle()
 
 article *Article::searchLoginUserArticle(string &id)
 {
+    for (auto ar : this->userLogin->notExaminedArticles)
+    {
+        if (ar->id == id)
+        {
+            cout << "This Article is under examination.\n";
+            return ar;
+        }
+    }
+
     for (auto ar : this->userLogin->acceptedArticles)
     {
         if (ar->id == id)
@@ -307,21 +323,21 @@ void Article::getArticle(string &id)
     }
 }
 
-double Article::similarity(string &a, string &b){
+double Article::similarity(string &a, string &b)
+{
     double ans = 0;
     int **temp = lcs(a, b);
 
-    if(temp[0][1]-temp[0][0]+1 < 50) return ans;
+    if (temp[0][1] - temp[0][0] + 1 < 50)
+    {
+        return ans;
+    }
 
-    ans += temp[0][1]-temp[0][0]+1;
+    ans += temp[0][1] - temp[0][0] + 1;
 
-    string p = a.substr(0, temp[0][0]+1), q = b.substr(0, temp[1][0]+1);
-    string r = a.substr(temp[0][1]+1, a.size()), s = b.substr(temp[1][1]+1, b.size());
+    string p = a.substr(0, temp[0][0] + 1), q = b.substr(0, temp[1][0] + 1);
+    string r = a.substr(temp[0][1] + 1, a.size()), s = b.substr(temp[1][1] + 1, b.size());
     ans += similarity(p, q);
     ans += similarity(r, s);
-    
     return ans;
 }
-
-     
-    
