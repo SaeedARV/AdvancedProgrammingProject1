@@ -47,7 +47,7 @@ void Article::addArticle(article *newArticle, vector<string> &usernames)
         }
         else
         {
-            cout << username << " is not found.";
+            cout << username << " is not found. \n";
         }
     }
 
@@ -186,7 +186,6 @@ void Article::trackArticle(string &id)
                     }
                 }
             }
-
             cout << "This article is accepted." << endl;
         }
         i++;
@@ -296,7 +295,6 @@ bool Article::wordsCounter(string &body)
 }
 
 // todo: last char special is ok
-
 bool Article::grammarCheck(string &body)
 {
     int openPar = 0, closePar = 0;
@@ -340,20 +338,27 @@ bool Article::grammarCheck(string &body)
 
 void Article::getAllArticle()
 {
-    // todo: change
-    // todo: if size != 0
-    cout << "notExaminedArticles:\n";
+    if (!this->userLogin->notExaminedArticles.empty())
+    {
+        cout << "Not-examined articles:\n";
+    }
     for (auto ar : this->userLogin->notExaminedArticles)
     {
         cout << "ID: " << ar->id << "\nName: " << ar->name << "\n----------------------------------------------\n";
     }
 
-    cout << "Acceoted articles:\n";
+    if (!this->userLogin->notExaminedArticles.empty())
+    {
+        cout << "Acceoted articles:\n";
+    }
     for (auto ar : this->userLogin->acceptedArticles)
     {
         cout << "ID: " << ar->id << "\nName: " << ar->name << "\n----------------------------------------------\n";
     }
-    cout << "Rejected articles:\n";
+    if (!this->userLogin->notExaminedArticles.empty())
+    {
+        cout << "Rejected articles:\n";
+    }
     for (auto ar : this->userLogin->rejectedArticles)
     {
         cout << "ID: " << ar->id << "\nName: " << ar->name << "\n----------------------------------------------\n";
