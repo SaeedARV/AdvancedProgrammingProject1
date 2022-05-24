@@ -57,8 +57,7 @@ void Article::addArticle(article *newArticle, vector<string> &usernames)
 
     if (vArticle(newArticle))
     {
-        // todo: better text
-        cout << "Posted for review ...\n";
+        cout << "This Article is under examination.\n";
         for (auto author : newArticle->authors)
         {
             author->notExaminedArticles.push_back(newArticle);
