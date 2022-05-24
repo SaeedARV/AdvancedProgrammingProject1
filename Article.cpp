@@ -116,34 +116,78 @@ int **Article::lcs(string &str1, string &str2)
     return r;
 }
 
-//todo: remember authors 
-//todo: check ref
 void Article::trackArticle(string &id)
 {
     int i = 0;
-    for (auto notExaminedArticle1: this->userLogin->notExaminedArticles)
+    for (auto notExaminedArticle1 : this->userLogin->notExaminedArticles)
     {
         if (notExaminedArticle1->id == id)
         {
-            for(auto notExaminedArticle2: this->notExaminedArticles)
+            for (auto notExaminedArticle2 : this->notExaminedArticles)
             {
-                if(notExaminedArticle1->id != notExaminedArticle2->id)
+                if (notExaminedArticle1->id != notExaminedArticle2->id)
                 {
-                    double sim = similarity(notExaminedArticle1->body, notExaminedArticle2->body)
-                    *2/(notExaminedArticle1->body.size()+notExaminedArticle2->body.size());
-
-                    if(sim > 0.5)
+                    for (auto ref : notExaminedArticle1->refId)
                     {
+                        if (ref == notExaminedArticle2->id)
+                        {
+                            continue;
+                        }
+                    }
+
+                    double sim = similarity(notExaminedArticle1->body, notExaminedArticle2->body) * 2 / (notExaminedArticle1->body.size() + notExaminedArticle2->body.size());
+
+                    if (sim > 0.5)
+                    {
+
                         cout << "This article is rejected." << endl;
-                        rejectedArticles.push_back(notExaminedArticle1);
-                        notExaminedArticles.erase(notExaminedArticles.begin()+i);
-                        return;
+
+                        for (auto author : notExaminedArticle1->authors)
+                        {
+                            author->rejectedArticles.push_back(notExaminedArticle1);
+
+                            for (int i = 0; i < author->notExaminedArticles.size(); i++)
+                            {
+                                if (author->notExaminedArticles[i] == notExaminedArticle1)
+                                {
+                                    author->notExaminedArticles.erase(notExaminedArticles.begin() + i);
+                                    break;
+                                }
+                            }
+                        }
+
+                        for (auto author : notExaminedArticle2->authors)
+                        {
+                            author->rejectedArticles.push_back(notExaminedArticle2);
+
+                            for (int i = 0; i < author->notExaminedArticles.size(); i++)
+                            {
+                                if (author->notExaminedArticles[i] == notExaminedArticle2)
+                                {
+                                    author->notExaminedArticles.erase(notExaminedArticles.begin() + i);
+                                    break;
+                                }
+                            }
+                        }
                     }
                 }
             }
-                acceptedArticles.push_back(notExaminedArticle1);
-                notExaminedArticles.erase(notExaminedArticles.begin()+i);
-                cout << "This article is accepted." << endl;    
+
+            for (auto author : notExaminedArticle1->authors)
+            {
+                author->acceptedArticles.push_back(notExaminedArticle1);
+
+                for (int i = 0; i < author->notExaminedArticles.size(); i++)
+                {
+                    if (author->notExaminedArticles[i] == notExaminedArticle1)
+                    {
+                        author->notExaminedArticles.erase(notExaminedArticles.begin() + i);
+                        break;
+                    }
+                }
+            }
+
+            cout << "This article is accepted." << endl;
         }
         i++;
     }
@@ -152,7 +196,7 @@ void Article::trackArticle(string &id)
     {
         if (ar->id == id)
         {
-            cout << "This article is accepted." << endl;  
+            cout << "This article is accepted." << endl;
             return;
         }
     }
@@ -164,7 +208,6 @@ void Article::trackArticle(string &id)
             return;
         }
     }
-
 }
 
 bool Article::vArticle(article *article)
@@ -252,7 +295,8 @@ bool Article::wordsCounter(string &body)
     return true;
 }
 
-//todo: last char special is ok
+// todo: last char special is ok
+
 bool Article::grammarCheck(string &body)
 {
     int openPar = 0, closePar = 0;
@@ -296,14 +340,13 @@ bool Article::grammarCheck(string &body)
 
 void Article::getAllArticle()
 {
-    //todo: change
-    //todo: if size != 0
+    // todo: change
+    // todo: if size != 0
     cout << "notExaminedArticles:\n";
     for (auto ar : this->userLogin->notExaminedArticles)
     {
         cout << "ID: " << ar->id << "\nName: " << ar->name << "\n----------------------------------------------\n";
     }
-
 
     cout << "Acceoted articles:\n";
     for (auto ar : this->userLogin->acceptedArticles)
