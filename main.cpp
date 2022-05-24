@@ -18,11 +18,12 @@ int main()
     {
         while (!thisUser->isLogin())
         {
-            //todo: add exit
             cout << "----------------\n";
             cout << "| Register | 0 |\n";
             cout << "----------------\n";
-            cout << "|  Login   | 1 |\n";
+            cout << "| Login    | 1 |\n";
+            cout << "----------------\n";
+            cout << "| Exit     | 2 |\n";
             cout << "----------------\n";
             cout << "Please enter a Number: ";
             cin >> work;
@@ -43,6 +44,11 @@ int main()
                 cout << "Please enter your password: ";
                 cin >> password;
                 loginUser = thisUser->login(username, password);
+            }
+            else if (work == "2") // Exit
+            {
+                cout << "Good bye!\n";
+                return 0;
             }
             else // 404
             {

@@ -47,7 +47,7 @@ void Article::addArticle(article *newArticle, vector<string> &usernames)
         }
         else
         {
-            cout << username << " is not found.";
+            cout << username << " is not found. \n";
         }
     }
 
@@ -116,34 +116,33 @@ int **Article::lcs(string &str1, string &str2)
     return r;
 }
 
-//todo: remember authors 
-//todo: check ref
+// todo: remember authors
+// todo: check ref
 void Article::trackArticle(string &id)
 {
     int i = 0;
-    for (auto notExaminedArticle1: this->userLogin->notExaminedArticles)
+    for (auto notExaminedArticle1 : this->userLogin->notExaminedArticles)
     {
         if (notExaminedArticle1->id == id)
         {
-            for(auto notExaminedArticle2: this->notExaminedArticles)
+            for (auto notExaminedArticle2 : this->notExaminedArticles)
             {
-                if(notExaminedArticle1->id != notExaminedArticle2->id)
+                if (notExaminedArticle1->id != notExaminedArticle2->id)
                 {
-                    double sim = similarity(notExaminedArticle1->body, notExaminedArticle2->body)
-                    *2/(notExaminedArticle1->body.size()+notExaminedArticle2->body.size());
+                    double sim = similarity(notExaminedArticle1->body, notExaminedArticle2->body) * 2 / (notExaminedArticle1->body.size() + notExaminedArticle2->body.size());
 
-                    if(sim > 0.5)
+                    if (sim > 0.5)
                     {
                         cout << "This article is rejected." << endl;
                         rejectedArticles.push_back(notExaminedArticle1);
-                        notExaminedArticles.erase(notExaminedArticles.begin()+i);
+                        notExaminedArticles.erase(notExaminedArticles.begin() + i);
                         return;
                     }
                 }
             }
-                acceptedArticles.push_back(notExaminedArticle1);
-                notExaminedArticles.erase(notExaminedArticles.begin()+i);
-                cout << "This article is accepted." << endl;    
+            acceptedArticles.push_back(notExaminedArticle1);
+            notExaminedArticles.erase(notExaminedArticles.begin() + i);
+            cout << "This article is accepted." << endl;
         }
         i++;
     }
@@ -152,7 +151,7 @@ void Article::trackArticle(string &id)
     {
         if (ar->id == id)
         {
-            cout << "This article is accepted." << endl;  
+            cout << "This article is accepted." << endl;
             return;
         }
     }
@@ -164,7 +163,6 @@ void Article::trackArticle(string &id)
             return;
         }
     }
-
 }
 
 bool Article::vArticle(article *article)
@@ -252,7 +250,7 @@ bool Article::wordsCounter(string &body)
     return true;
 }
 
-//todo: last char special is ok
+// todo: last char special is ok
 bool Article::grammarCheck(string &body)
 {
     int openPar = 0, closePar = 0;
@@ -296,21 +294,27 @@ bool Article::grammarCheck(string &body)
 
 void Article::getAllArticle()
 {
-    //todo: change
-    //todo: if size != 0
-    cout << "notExaminedArticles:\n";
+    if (!this->userLogin->notExaminedArticles.empty())
+    {
+        cout << "Not-examined articles:\n";
+    }
     for (auto ar : this->userLogin->notExaminedArticles)
     {
         cout << "ID: " << ar->id << "\nName: " << ar->name << "\n----------------------------------------------\n";
     }
 
-
-    cout << "Acceoted articles:\n";
+    if (!this->userLogin->notExaminedArticles.empty())
+    {
+        cout << "Acceoted articles:\n";
+    }
     for (auto ar : this->userLogin->acceptedArticles)
     {
         cout << "ID: " << ar->id << "\nName: " << ar->name << "\n----------------------------------------------\n";
     }
-    cout << "Rejected articles:\n";
+    if (!this->userLogin->notExaminedArticles.empty())
+    {
+        cout << "Rejected articles:\n";
+    }
     for (auto ar : this->userLogin->rejectedArticles)
     {
         cout << "ID: " << ar->id << "\nName: " << ar->name << "\n----------------------------------------------\n";
