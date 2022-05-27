@@ -78,6 +78,7 @@ void Article::addArticle(article *newArticle, vector<string> &usernames)
 int **Article::lcs(string &str1, string &str2)
 {
     int **r;
+    r = new int *[2];
     r[0] = new int[2];
     r[1] = new int[2];
     r[0][0] = 0;
@@ -88,7 +89,7 @@ int **Article::lcs(string &str1, string &str2)
 
     for (int i = 0; i < str1.length(); i++)
     {
-        for (int j = 0; j < str2.length(); j++)
+        for (int j = i; j < str1.length(); j++)
         {
             string a = "";
             for (int k = i; k <= j; k++)
@@ -117,7 +118,7 @@ int **Article::lcs(string &str1, string &str2)
 
 void Article::trackArticle(string &id)
 {
-    int i = 0;
+    bool rejected = false;
     for (auto notExaminedArticle1 : this->userLogin->notExaminedArticles)
     {
         if (notExaminedArticle1->id == id)
@@ -126,68 +127,61 @@ void Article::trackArticle(string &id)
             {
                 if (notExaminedArticle1->id != notExaminedArticle2->id)
                 {
-                    for (auto ref : notExaminedArticle1->refId)
+                    if (find(notExaminedArticle1->refId.begin(), notExaminedArticle1->refId.end(), notExaminedArticle2->id) == notExaminedArticle1->refId.end())
                     {
-                        if (ref == notExaminedArticle2->id)
+                        cout << notExaminedArticle2->id << endl;
+                        double sim = similarity(notExaminedArticle1->body, notExaminedArticle2->body) * 2 / (notExaminedArticle1->body.size() + notExaminedArticle2->body.size());
+
+                        if (sim > 0.5)
                         {
-                            continue;
+                            rejected = true;
+
+                            for (auto author : notExaminedArticle2->authors)
+                            {
+                                author->rejectedArticles.push_back(notExaminedArticle2);
+                                author->notExaminedArticles.erase(find(author->notExaminedArticles.begin(), author->notExaminedArticles.end(), notExaminedArticle2));
+                            }
                         }
                     }
+                }
+            }
 
-                    double sim = similarity(notExaminedArticle1->body, notExaminedArticle2->body) * 2 / (notExaminedArticle1->body.size() + notExaminedArticle2->body.size());
+            for (auto acceptedArticle : this->acceptedArticles)
+            {
+
+                if (find(notExaminedArticle1->refId.begin(), notExaminedArticle1->refId.end(), acceptedArticle->id) == notExaminedArticle1->refId.end())
+                {
+
+                    double sim = similarity(notExaminedArticle1->body, acceptedArticle->body) * 2 / (notExaminedArticle1->body.size() + acceptedArticle->body.size());
 
                     if (sim > 0.5)
                     {
-
-                        cout << "This article is rejected." << endl;
-
-                        for (auto author : notExaminedArticle1->authors)
-                        {
-                            author->rejectedArticles.push_back(notExaminedArticle1);
-
-                            for (int i = 0; i < author->notExaminedArticles.size(); i++)
-                            {
-                                if (author->notExaminedArticles[i] == notExaminedArticle1)
-                                {
-                                    author->notExaminedArticles.erase(notExaminedArticles.begin() + i);
-                                    break;
-                                }
-                            }
-                        }
-
-                        for (auto author : notExaminedArticle2->authors)
-                        {
-                            author->rejectedArticles.push_back(notExaminedArticle2);
-
-                            for (int i = 0; i < author->notExaminedArticles.size(); i++)
-                            {
-                                if (author->notExaminedArticles[i] == notExaminedArticle2)
-                                {
-                                    author->notExaminedArticles.erase(notExaminedArticles.begin() + i);
-                                    break;
-                                }
-                            }
-                        }
+                        rejected = true;
                     }
                 }
             }
-
-            for (auto author : notExaminedArticle1->authors)
+            if (rejected)
             {
-                author->acceptedArticles.push_back(notExaminedArticle1);
-
-                for (int i = 0; i < author->notExaminedArticles.size(); i++)
+                for (auto author : notExaminedArticle1->authors)
                 {
-                    if (author->notExaminedArticles[i] == notExaminedArticle1)
-                    {
-                        author->notExaminedArticles.erase(notExaminedArticles.begin() + i);
-                        break;
-                    }
+                    author->rejectedArticles.push_back(notExaminedArticle1);
+                    author->notExaminedArticles.erase(find(author->notExaminedArticles.begin(), author->notExaminedArticles.end(), notExaminedArticle1));
                 }
+
+                rejectedArticles.push_back(notExaminedArticle1);
             }
-            cout << "This article is accepted." << endl;
+            else
+            {
+                for (auto author : notExaminedArticle1->authors)
+                {
+                    author->acceptedArticles.push_back(notExaminedArticle1);
+                    author->notExaminedArticles.erase(find(author->notExaminedArticles.begin(), author->notExaminedArticles.end(), notExaminedArticle1));
+                }
+
+                acceptedArticles.push_back(notExaminedArticle1);
+            }
+            notExaminedArticles.erase(find(notExaminedArticles.begin(), notExaminedArticles.end(), notExaminedArticle1));
         }
-        i++;
     }
 
     for (auto ar : this->userLogin->acceptedArticles)
@@ -202,7 +196,7 @@ void Article::trackArticle(string &id)
     {
         if (ar->id == id)
         {
-            cout << "This Article is rejected.\n";
+            cout << "This Article is rejected." << endl;
             return;
         }
     }
@@ -337,7 +331,7 @@ bool Article::grammarCheck(string &body)
 
 void Article::getAllArticle()
 {
-    if (!this->userLogin->notExaminedArticles.empty())
+    if (this->userLogin->notExaminedArticles.size())
     {
         cout << "Not-examined articles:\n";
     }
@@ -346,15 +340,15 @@ void Article::getAllArticle()
         cout << "ID: " << ar->id << "\nName: " << ar->name << "\n----------------------------------------------\n";
     }
 
-    if (!this->userLogin->notExaminedArticles.empty())
+    if (this->userLogin->acceptedArticles.size())
     {
-        cout << "Acceoted articles:\n";
+        cout << "Accepted articles:\n";
     }
     for (auto ar : this->userLogin->acceptedArticles)
     {
         cout << "ID: " << ar->id << "\nName: " << ar->name << "\n----------------------------------------------\n";
     }
-    if (!this->userLogin->notExaminedArticles.empty())
+    if (this->userLogin->rejectedArticles.size())
     {
         cout << "Rejected articles:\n";
     }
@@ -424,7 +418,7 @@ double Article::similarity(string &a, string &b)
     ans += temp[0][1] - temp[0][0] + 1;
 
     string p = a.substr(0, temp[0][0] + 1), q = b.substr(0, temp[1][0] + 1);
-    string r = a.substr(temp[0][1] + 1, a.size()), s = b.substr(temp[1][1] + 1, b.size());
+    string r = a.substr(temp[0][1] + 1, a.size()-temp[0][1]), s = b.substr(temp[1][1] + 1, b.size()-temp[1][1]);
     ans += similarity(p, q);
     ans += similarity(r, s);
     return ans;

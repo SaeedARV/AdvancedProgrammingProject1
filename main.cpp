@@ -116,7 +116,7 @@ int main()
                     authors.push_back(author);
                 }
 
-                cout << "Please enter the body of your article: (Put an back tike (`) at the end of your text) \n";
+                cout << "Please enter the body of your article: (Put a back tike (`) at the end of your text) \n";
                 string body;
                 getline(cin >> ws, body, '`');
                 ar->body = body;
