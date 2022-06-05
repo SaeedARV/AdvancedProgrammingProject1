@@ -25,16 +25,16 @@ private:
     static vector<article *> acceptedArticles;
     static vector<article *> rejectedArticles;
     const user *userLogin;
+    string createId();
     vector<string> split(string &str);
+    int **lcs(string &str1, string &str2);
+    double similarity(string &a, string &b);
     bool minThreeParagraph(string &body);
     bool countBodyWords(string &body);
     bool countNameWords(string &name);
     bool wordsCounter(string &body);
     bool grammarCheck(string &body);
     bool vArticle(article *_article);
-    int **lcs(string &str1, string &str2);
-    string createId();
-    double similarity(string &a, string &b);
 
 public:
     Article(user *_userLogin);
