@@ -118,7 +118,7 @@ int main()
 
                 cout << "Please enter the body of your article: (Put a back tike (`) at the end of your text) \n";
                 string body;
-                getline(cin >> ws, body, '`');
+                getline(cin >> ws, body, '`'); // Get text to view back tike (`)
                 ar->body = body;
 
                 thisArticle->addArticle(ar, authors);
