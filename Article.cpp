@@ -11,29 +11,18 @@ Article::Article(user *_userLogin) : userLogin{_userLogin} {}
 
 Article::~Article() {}
 // -----------
-/*
- *  Global functions
+
+/* 
+ * Global functions
  */
 
-string Article::createId() // Create an ID with 10 digits
+string currentTime() // Get the current date and time
 {
-    string id = "";
-    // set for random number
-    srand((unsigned)time(0));
-    for (int i = 0; i < 10; i++)
-    {
-        // get random number
-        id += to_string(rand() % 10);
-    }
-    return id;
-}
-
-string currentTime() // Get now date and time
-{
-    // Get time
+    // Get the current date and time
     time_t t = time(0);
     tm *now = localtime(&t);
-    // Edit time and to string
+
+    // change the date and time to string
     string date =
         to_string(now->tm_year + 1900) + '/' +
         to_string(now->tm_mon + 1) + '/' +
@@ -45,7 +34,26 @@ string currentTime() // Get now date and time
     return date;
 }
 
-vector<string> Article::split(string &str) // Split text by space
+/*
+ *  Private functions
+ */
+
+string Article::createId() // Create an ID with 10 digits
+{
+    string id = "";
+
+    // Set a random number as starting point
+    srand((unsigned)time(0));
+    for (int i = 0; i < 10; i++)
+    {
+        // Get a random number
+        id += to_string(rand() % 10);
+    }
+    return id;
+}
+
+
+vector<string> Article::split(string &str) // Split the text by space
 {
     vector<string> words;
     string word = "";
@@ -54,7 +62,7 @@ vector<string> Article::split(string &str) // Split text by space
     {
         if (str[i] == ' ')
         {
-            // add letters to word
+            // Add letters to the word
             for (int j = first; j < i; j++)
             {
                 word += str[j];
@@ -64,16 +72,17 @@ vector<string> Article::split(string &str) // Split text by space
             word = "";
         }
     }
-    // add the finaly word
-    for (int j = first; j < str.length(); j++)
+
+    // Add the final word
+    for (int i = first; i < str.length(); i++)
     {
-        word += str[j];
+        word += str[i];
     }
     words.push_back(word);
     return words;
 }
 
-int **Article::lcs(string &str1, string &str2) // Get the largest common sub-discipline
+int **Article::lcs(string &str1, string &str2) // Get the longest common substring
 {
     int **r;
     r = new int *[2];
@@ -114,18 +123,19 @@ int **Article::lcs(string &str1, string &str2) // Get the largest common sub-dis
     return r;
 }
 
-double Article::similarity(string &a, string &b) // Get the length of the longest common strings
+double Article::similarity(string &a, string &b) // Get sum of lengths of longest common substrings
 {
     double ans = 0;
     int **temp = lcs(a, b);
-    int len = temp[0][1] - temp[0][0] + 1; // Get length
+    int len = temp[0][1] - temp[0][0] + 1; // Get the length
 
     if (len < 50)
     {
         return ans;
     }
     ans += len;
-    // Chanck text whit longest common strings
+
+    // add lengths of longest common substrings to ans
     string s1 = a.substr(0, temp[0][0] + 1);
     string e1 = a.substr(temp[0][1] + 1, a.size() - temp[0][1]);
     string s2 = b.substr(0, temp[1][0] + 1);
@@ -135,11 +145,12 @@ double Article::similarity(string &a, string &b) // Get the length of the longes
 
     return ans;
 }
-// -----------
+
 /*
- * Verifiers function
+ * Verifier functions
  */
-bool Article::minThreeParagraph(string &body) // Check text that is at least 3 paragraphs long
+
+bool Article::minThreeParagraph(string &body) // Check if the text is at least 3 paragraphs long
 {
     int paragraph = 0;
     if (*(body.end() - 1) != '\n')
@@ -154,38 +165,38 @@ bool Article::minThreeParagraph(string &body) // Check text that is at least 3 p
     return paragraph >= 3;
 }
 
-bool Article::countBodyWords(string &body) // Check body have 100-5000 words
+bool Article::countBodyWords(string &body) // Check if the body has 100-5000 words
 {
     vector<string> words = this->split(body);
     return words.size() >= 100 && words.size() <= 5000;
 }
 
-bool Article::countNameWords(string &name) // Check name have 1-12 words
+bool Article::countNameWords(string &name) // Check if the name has 1-12 words
 {
     vector<string> words = this->split(name);
     return words.size() >= 1 && words.size() <= 12;
 }
 
-bool Article::wordsCounter(string &body) // Check that no word exists more than 50 times
+bool Article::wordsCounter(string &body) // Check if a word exists more than 50 times
 {
     vector<string> words = this->split(body);
     map<string, int> wordCounter;
 
     for (auto word : words)
     {
-        transform(word.begin(), word.end(), word.begin(), ::tolower); // Set word to lowercase letters
-        // --------------
+        transform(word.begin(), word.end(), word.begin(), ::tolower); // Change word letters to lowercase
+        
         // Remove the symbols from the end of the word
         char end = *(word.end() - 1);
         if (end == '?' || end == '!' || end == '.' || end == ',' || end == ';')
         {
             *(word.end()) = '\0';
         }
-        // --------------
+        
         wordCounter[word]++;
     }
 
-    for (auto word : wordCounter) // Check that no word exists more than 50 times
+    for (auto word : wordCounter) // Check if a word exists more than 50 times
     {
         if (word.second > 50)
             return false;
@@ -193,7 +204,8 @@ bool Article::wordsCounter(string &body) // Check that no word exists more than 
 
     return true;
 }
-// TODO: set comment
+
+// Check if grammar of the text is valid
 bool Article::grammarCheck(string &body)
 {
     int openPar = 0, closePar = 0;
@@ -244,18 +256,19 @@ bool Article::vArticle(article *article) // Check all restrictions
            (this->wordsCounter(article->body));
 }
 // -----------
+
 /*
  * publice function
  */
 
 void Article::addArticle(article *newArticle, vector<string> &usernames) // Add article
 {
-    // set date and id
+    // Set date and id
     newArticle->date = currentTime();
     newArticle->id = this->createId();
     cout << "The ID is: " << newArticle->id << "\n";
 
-    for (auto username : usernames) // checking if author in register add author in author article else show not found
+    for (auto username : usernames) // Add author to the article's authors or show an error
     {
         if (User::getUser(username))
         {
@@ -267,7 +280,7 @@ void Article::addArticle(article *newArticle, vector<string> &usernames) // Add 
         }
     }
 
-    if (vArticle(newArticle)) // check if valid article add to notExaminedArticles and else add to rejectedArticles
+    if (vArticle(newArticle)) // Add the article to notExaminedArticles
     {
         cout << "This Article is under examination.\n";
         for (auto author : newArticle->authors)
@@ -276,7 +289,7 @@ void Article::addArticle(article *newArticle, vector<string> &usernames) // Add 
         }
         notExaminedArticles.push_back(newArticle);
     }
-    else
+    else // Add the article to rejectedArticles
     {
         cout << "Your article is rejected.\n";
         for (auto author : newArticle->authors)
@@ -294,22 +307,23 @@ void Article::trackArticle(string &id) // Check similarity
     {
         if (notExaminedArticle1->id == id) // Find Article
         {
-            for (auto notExaminedArticle2 : this->notExaminedArticles) // Check with not examined Articles
+            for (auto notExaminedArticle2 : this->notExaminedArticles) // Check with not-examined articles
             {
-                if (notExaminedArticle1->id != notExaminedArticle2->id) // Check not selfe
+                if (notExaminedArticle1->id != notExaminedArticle2->id) // Check if it's not itself
                 {
                     if (find(notExaminedArticle1->refId.begin(), notExaminedArticle1->refId.end(), notExaminedArticle2->id) == notExaminedArticle1->refId.end()) // Check the Article not in the refrens
                     {
                         double sim = similarity(notExaminedArticle1->body, notExaminedArticle2->body) * 2 / (notExaminedArticle1->body.size() + notExaminedArticle2->body.size()); // Get similarity
 
-                        if (sim > 0.5)
+                        if (sim > 0.5) // Add the article to rejectedArticles and erase it from notExaminedArticles
                         {
                             rejected = true;
-                            for (auto author : notExaminedArticle2->authors) // add to reject not examinedArticle2
+                            for (auto author : notExaminedArticle2->authors)
                             {
                                 author->rejectedArticles.push_back(notExaminedArticle2);
                                 author->notExaminedArticles.erase(find(author->notExaminedArticles.begin(), author->notExaminedArticles.end(), notExaminedArticle2));
                             }
+
                             notExaminedArticles.erase(find(notExaminedArticles.begin(), notExaminedArticles.end(), notExaminedArticle2));
                             rejectedArticles.push_back(notExaminedArticle2);
                         }
@@ -317,7 +331,7 @@ void Article::trackArticle(string &id) // Check similarity
                 }
             }
 
-            for (auto acceptedArticle : this->acceptedArticles) // Check with accepted Articles
+            for (auto acceptedArticle : this->acceptedArticles) // Check with accepted articles
             {
 
                 if (find(notExaminedArticle1->refId.begin(), notExaminedArticle1->refId.end(), acceptedArticle->id) == notExaminedArticle1->refId.end()) // Check the Article not in the refrens
@@ -333,7 +347,7 @@ void Article::trackArticle(string &id) // Check similarity
             }
             if (rejected)
             {
-                for (auto author : notExaminedArticle1->authors) // add to reject
+                for (auto author : notExaminedArticle1->authors) // Add the article to rejectedArticles and erase it from notExaminedArticles
                 {
                     author->rejectedArticles.push_back(notExaminedArticle1);
                     author->notExaminedArticles.erase(find(author->notExaminedArticles.begin(), author->notExaminedArticles.end(), notExaminedArticle1));
@@ -344,7 +358,7 @@ void Article::trackArticle(string &id) // Check similarity
             }
             else
             {
-                for (auto author : notExaminedArticle1->authors) // add to the accept
+                for (auto author : notExaminedArticle1->authors) // Add the article to acceptedArticles and erase it from notExaminedArticles
                 {
                     author->acceptedArticles.push_back(notExaminedArticle1);
                     author->notExaminedArticles.erase(find(author->notExaminedArticles.begin(), author->notExaminedArticles.end(), notExaminedArticle1));
@@ -358,7 +372,7 @@ void Article::trackArticle(string &id) // Check similarity
     }
 }
 
-void Article::getAllArticle() // show all article for login user
+void Article::getAllArticle() // show all articles
 {
     if (this->userLogin->notExaminedArticles.size())
     {
@@ -387,7 +401,7 @@ void Article::getAllArticle() // show all article for login user
     }
 }
 
-void Article::getArticle(string &id) // Show article
+void Article::getArticle(string &id) // Show the article's information
 {
     article *art = nullptr;
     if (!art)
