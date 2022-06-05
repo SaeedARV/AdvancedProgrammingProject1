@@ -287,7 +287,6 @@ bool Article::wordsCounter(string &body)
     return true;
 }
 
-// todo: last char special is ok
 bool Article::grammarCheck(string &body)
 {
     int openPar = 0, closePar = 0;
