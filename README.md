@@ -1,2 +1,1 @@
-# AdvancedProgrammingProject1
-## goooo...
+Advanced programming midterm project
