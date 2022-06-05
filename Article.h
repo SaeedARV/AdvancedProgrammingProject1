@@ -34,7 +34,6 @@ private:
     bool vArticle(article *_article);
     int **lcs(string &str1, string &str2);
     string createId();
-    article *searchLoginUserArticle(string &id);
     double similarity(string &a, string &b);
 
 public:
