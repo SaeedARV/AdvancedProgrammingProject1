@@ -3,4 +3,5 @@
 *.cbp
 bin/
 obj/
+Build
 .vscode
