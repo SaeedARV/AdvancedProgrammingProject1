@@ -1,3 +1,3 @@
 Advanced programming midterm project
 
-An article evaluation system written in c++
+An article evaluation system written in C++
